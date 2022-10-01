@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:googleapis/youtube/v3.dart';
+import 'package:grandtouryt/utils/thumbnails_extension.dart';
 
 import '../../pages/playlist_page.dart';
 import 'image_list_tile.dart';
@@ -13,7 +14,7 @@ class PlaylistListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ImageListTile(
       title: playlist.snippet!.title!,
-      imageUrl: playlist.snippet!.thumbnails!.high!.url!,
+      image: playlist.snippet!.thumbnails!.image,
       additionalWidgets: [
         Positioned(
           top: 8,

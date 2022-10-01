@@ -39,65 +39,26 @@ class YoutubeService {
     return channel;
   }
 
-  Future<List<Playlist>> fetchPlaylists() async {
+  Future<PlaylistListResponse> fetchPlaylistsPage(String? pageToken) async {
     final api = await getApi();
-    List<Playlist> playlists = [];
-    String? pageToken;
-    do {
-      final response = await api.playlists.list(
-        [
-          'contentDetails',
-          'id',
-          'localizations',
-          'player',
-          'snippet',
-          'status',
-        ],
-        channelId: grandTourYoutubeChannelId,
-        pageToken: pageToken,
-      );
-      playlists.addAll(response.items!);
-      pageToken = response.nextPageToken;
-    } while (pageToken != null);
-    return playlists;
+    final response = await api.playlists.list(
+      ['contentDetails', 'id', 'localizations', 'player', 'snippet', 'status'],
+      channelId: grandTourYoutubeChannelId,
+      pageToken: pageToken,
+    );
+    return response;
   }
 
-  Future<List<PlaylistItem>> fetchPlaylist(String id) async {
-    final api = await getApi();
-    List<PlaylistItem> playlists = [];
-    String? pageToken;
-    do {
-      final response = await api.playlistItems.list(
-        [
-          'contentDetails',
-          'id',
-          'snippet',
-          'status',
-        ],
-        playlistId: id,
-        pageToken: pageToken,
-      );
-      playlists.addAll(response.items!);
-      pageToken = response.nextPageToken;
-    } while (pageToken != null);
-    return playlists;
-  }
-
-  Future<List<PlaylistItem>> fetchPlaylistPage(
+  Future<PlaylistItemListResponse> fetchPlaylistPage(
     String id,
     String? pageToken,
   ) async {
     final api = await getApi();
     final response = await api.playlistItems.list(
-      [
-        'contentDetails',
-        'id',
-        'snippet',
-        'status',
-      ],
+      ['contentDetails', 'id', 'snippet', 'status'],
       playlistId: id,
       pageToken: pageToken,
     );
-    return response.items!;
+    return response;
   }
 }

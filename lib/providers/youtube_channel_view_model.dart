@@ -1,17 +1,22 @@
 import 'package:googleapis/youtube/v3.dart';
 import 'package:injectable/injectable.dart';
 
+import '../models/paginated_ui_resource.dart';
 import '../models/ui_resource.dart';
 import '../services/youtube_service.dart';
 
 @lazySingleton
 class YoutubeChannelViewModel {
   UiResource<Channel> channelResource;
-  UiResource<List<Playlist>> playlistsResource;
+  PagintatedUiResource<Playlist, String?> playlistsResource;
 
   YoutubeChannelViewModel(YoutubeService service)
       : channelResource = FutureUiResource(() => service.fetchChannel()),
-        playlistsResource = FutureUiResource(() => service.fetchPlaylists());
+        playlistsResource = YoutubePagintatedUiResource(
+          (pageToken) => service.fetchPlaylistsPage(pageToken),
+          nextPageTokenExtractor: (r) => r.nextPageToken,
+          listExtractor: (r) => r.items!,
+        );
 }
 
 @lazySingleton
@@ -20,20 +25,24 @@ class YoutubePlaylistViewModelFactory {
 
   YoutubePlaylistViewModelFactory(this._service);
 
-  final Map<String, YoutubePlaylistViewModel> _cacheMap = {};
+  final Map<String, PaginatedYoutubePlaylistViewModel> _paginatedCacheMap = {};
 
-  YoutubePlaylistViewModel create(String playlistId) {
-    if (!_cacheMap.containsKey(playlistId)) {
-      _cacheMap[playlistId] = YoutubePlaylistViewModel(_service, playlistId);
+  PaginatedYoutubePlaylistViewModel createPaginated(String playlistId) {
+    if (!_paginatedCacheMap.containsKey(playlistId)) {
+      _paginatedCacheMap[playlistId] =
+          PaginatedYoutubePlaylistViewModel(_service, playlistId);
     }
-    return _cacheMap[playlistId]!;
+    return _paginatedCacheMap[playlistId]!;
   }
 }
 
-class YoutubePlaylistViewModel {
-  UiResource<List<PlaylistItem>> playlistItemsResource;
+class PaginatedYoutubePlaylistViewModel {
+  PagintatedUiResource<PlaylistItem, String?> playlistItemsResource;
 
-  YoutubePlaylistViewModel(YoutubeService service, String playlistId)
-      : playlistItemsResource =
-            FutureUiResource(() => service.fetchPlaylist(playlistId));
+  PaginatedYoutubePlaylistViewModel(YoutubeService service, String playlistId)
+      : playlistItemsResource = YoutubePagintatedUiResource(
+          (pageToken) => service.fetchPlaylistPage(playlistId, pageToken),
+          nextPageTokenExtractor: (r) => r.nextPageToken,
+          listExtractor: (r) => r.items!,
+        );
 }

@@ -1,120 +1,107 @@
 import 'package:flutter/material.dart';
+import 'package:googleapis/youtube/v3.dart';
 
 import '../di/locator.dart';
+import '../models/paginated_ui_resource.dart';
 import '../providers/youtube_channel_view_model.dart';
 import '../widgets/channel_description.dart';
 import '../widgets/channel_image.dart';
+import '../widgets/paginated_horizontal_list.dart';
 import '../widgets/resource_builder.dart';
 import '../widgets/tiles/playlist_item_list_tile.dart';
 import '../widgets/tiles/playlist_list_tile.dart';
 
-class ChannelPage extends StatefulWidget {
+class ChannelPage extends StatelessWidget {
   static const routeName = '/channel';
 
   const ChannelPage({Key? key}) : super(key: key);
 
   @override
-  State<ChannelPage> createState() => _ChannelPageState();
-}
-
-class _ChannelPageState extends State<ChannelPage> {
-  final YoutubeChannelViewModel _viewModel = locator<YoutubeChannelViewModel>();
-
-  @override
   Widget build(BuildContext context) {
+    final viewModel = locator<YoutubeChannelViewModel>();
+
     return SafeArea(
       child: Scaffold(
         body: ResourceBuilder(
-          resource: _viewModel.channelResource,
+          resource: viewModel.channelResource,
           builder: (context, channel) {
-            return SafeArea(
-              child: CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Center(
-                      child: ChannelImage(
-                        imageUrl: channel.snippet!.thumbnails!.high!.url!,
-                      ),
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: ChannelDescription(
-                      title: channel.snippet!.title!,
-                      description: channel.snippet!.description!,
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        top: 8,
-                        left: 16,
-                        right: 16,
-                      ),
-                      child: Text(
-                        'Playlists',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: ResourceBuilder(
-                      resource: _viewModel.playlistsResource,
-                      builder: (context, playlists) {
-                        return SizedBox(
-                          height: 200,
-                          child: ListView.builder(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            itemBuilder: (context, index) {
-                              final playlist = playlists[index];
-
-                              return PlaylistListTile(
-                                playlist: playlist,
-                              );
-                            },
-                            itemCount: playlists.length,
-                            scrollDirection: Axis.horizontal,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Builder(
-                      builder: (context) {
-                        final viewModelFactory =
-                            locator<YoutubePlaylistViewModelFactory>();
-                        final viewModel = viewModelFactory.create(
-                            channel.contentDetails!.relatedPlaylists!.uploads!);
-                        return ResourceBuilder(
-                          resource: viewModel.playlistItemsResource,
-                          builder: (context, playlistItems) {
-                            return SizedBox(
-                              height: 200,
-                              child: ListView.builder(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8),
-                                itemBuilder: (context, index) {
-                                  final playlistItem = playlistItems[index];
-
-                                  return PlaylistItemListTile(
-                                    playlistItem: playlistItem,
-                                  );
-                                },
-                                itemCount: playlistItems.length,
-                                scrollDirection: Axis.horizontal,
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
+            return ChannelView(
+              channel: channel,
+              playlistsResource: viewModel.playlistsResource,
             );
           },
         ),
       ),
+    );
+  }
+}
+
+class ChannelView extends StatelessWidget {
+  final Channel channel;
+  final PagintatedUiResource<Playlist, String?> playlistsResource;
+
+  const ChannelView({
+    super.key,
+    required this.channel,
+    required this.playlistsResource,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final viewModelFactory = locator<YoutubePlaylistViewModelFactory>();
+    final uploadsId = channel.contentDetails!.relatedPlaylists!.uploads!;
+    final uploadsViewModel = viewModelFactory.createPaginated(uploadsId);
+
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Center(
+            child: ChannelImage(
+              thumbnailDetails: channel.snippet!.thumbnails!,
+            ),
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: ChannelDescription(
+            title: channel.snippet!.title!,
+            description: channel.snippet!.description!,
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
+            child: Text(
+              'Uploads',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: PaginatedHorizontalList<PlaylistItem>(
+            pagintatedResource: uploadsViewModel.playlistItemsResource,
+            itemBuilder: (_, item, __) {
+              return PlaylistItemListTile(playlistItem: item);
+            },
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
+            child: Text(
+              'Playlists',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: PaginatedHorizontalList<Playlist>(
+            pagintatedResource: playlistsResource,
+            itemBuilder: (_, item, __) {
+              return PlaylistListTile(playlist: item);
+            },
+          ),
+        ),
+      ],
     );
   }
 }

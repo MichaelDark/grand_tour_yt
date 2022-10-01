@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:googleapis/youtube/v3.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../di/locator.dart';
 import '../providers/youtube_channel_view_model.dart';
-import '../widgets/resource_builder.dart';
 import '../widgets/tiles/playlist_item_list_tile.dart';
 
 class PlaylistPageArguments {
@@ -27,7 +28,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
     final modaRoute = ModalRoute.of(context)!;
     final args = modaRoute.settings.arguments as PlaylistPageArguments;
     final viewModelFactory = locator<YoutubePlaylistViewModelFactory>();
-    final viewModel = viewModelFactory.create(args.playlistId);
+    final viewModel = viewModelFactory.createPaginated(args.playlistId);
 
     return SafeArea(
       child: Scaffold(
@@ -35,28 +36,19 @@ class _PlaylistPageState extends State<PlaylistPage> {
           title: Text(args.title),
           automaticallyImplyLeading: true,
         ),
-        body: ResourceBuilder(
-          resource: viewModel.playlistItemsResource,
-          builder: (context, playlistItems) {
-            return SafeArea(
-              child: CustomScrollView(
-                slivers: [
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        final playlistItem = playlistItems[index];
-
-                        return PlaylistItemListTile(
-                          playlistItem: playlistItem,
-                        );
-                      },
-                      childCount: playlistItems.length,
-                    ),
-                  ),
-                ],
+        body: SafeArea(
+          child: CustomScrollView(
+            slivers: [
+              PagedSliverList(
+                pagingController: viewModel.playlistItemsResource.controller,
+                builderDelegate: PagedChildBuilderDelegate<PlaylistItem>(
+                  itemBuilder: (_, item, __) {
+                    return PlaylistItemListTile(playlistItem: item);
+                  },
+                ),
               ),
-            );
-          },
+            ],
+          ),
         ),
       ),
     );

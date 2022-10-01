@@ -4,14 +4,14 @@ class ImageListTile extends StatelessWidget {
   static Color get backgroundColor => Colors.grey.shade300.withOpacity(0.8);
 
   final String title;
-  final String imageUrl;
+  final ImageProvider image;
   final List<Widget> additionalWidgets;
   final VoidCallback onTap;
 
   const ImageListTile({
     Key? key,
     required this.title,
-    required this.imageUrl,
+    required this.image,
     this.additionalWidgets = const [],
     required this.onTap,
   }) : super(key: key);
@@ -41,8 +41,8 @@ class ImageListTile extends StatelessWidget {
               child: Stack(
                 children: [
                   Positioned.fill(
-                    child: Image.network(
-                      imageUrl,
+                    child: Image(
+                      image: image,
                       fit: BoxFit.cover,
                     ),
                   ),
