@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:googleapis/youtube/v3.dart';
 import 'package:grandtouryt/utils/thumbnails_extension.dart';
 
+import '../../pages/video_page.dart';
 import 'image_list_tile.dart';
 
 class PlaylistItemListTile extends StatelessWidget {
@@ -28,19 +29,13 @@ class PlaylistItemListTile extends StatelessWidget {
         ),
       ],
       onTap: () {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text(playlistItem.contentDetails!.videoId!),
+        Navigator.of(context).pushNamed(
+          VideoPage.routeName,
+          arguments: VideoPageArguments(
+            title: playlistItem.snippet!.title!,
+            videoId: playlistItem.contentDetails!.videoId!,
           ),
         );
-        // Navigator.of(context).pushNamed(
-        //   PlaylistPage.routeName,
-        //   arguments: PlaylistPageArguments(
-        //     title: playlistItem.snippet!.title!,
-        //     playlistId: playlistItem.id!,
-        //   ),
-        // );
       },
     );
   }

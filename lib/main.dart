@@ -5,6 +5,7 @@ import 'pages/channel_page.dart';
 import 'pages/playlist_page.dart';
 import 'pages/sign_in_page.dart';
 import 'pages/splash_page.dart';
+import 'pages/video_page.dart';
 
 void main() {
   configureDependencies();
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         SignInPage.routeName: (_) => const SignInPage(),
         ChannelPage.routeName: (_) => const ChannelPage(),
         PlaylistPage.routeName: (_) => const PlaylistPage(),
+        VideoPage.routeName: (_) => const VideoPage(),
       },
       debugShowCheckedModeBanner: false,
       builder: (context, child) {

@@ -9,13 +9,20 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  
+  # Core
   logger: ^1.1.0
   get_it: ^7.2.0
   injectable: ^1.5.3
+  
+  # Google API
   google_sign_in: ^5.4.2
   googleapis: ^9.2.0
   extension_google_sign_in_as_googleapis_auth: ^2.0.7
+
+  # UI
   infinite_scroll_pagination: ^3.2.0
+  youtube_player_flutter: ^8.1.0
 
 dev_dependencies:
   flutter_test:
