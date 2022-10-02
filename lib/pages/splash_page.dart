@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grandtouryt/services/google_auth_service.dart';
+import 'package:lottie/lottie.dart';
 
 import '../di/locator.dart';
 import 'channel_page.dart';
@@ -14,30 +15,65 @@ class SplashPage extends StatefulWidget {
   State<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
+  late Future<String> _nextRouteFuture;
+  late final AnimationController _controller;
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _init(context));
+    _nextRouteFuture = _getNextRoute();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 4),
+      vsync: this,
+    );
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _navigate();
+      }
+    });
+    _controller.forward();
   }
 
-  void _init(BuildContext context) async {
-    await Future.delayed(const Duration(seconds: 1));
-    if (!mounted) return;
-
+  Future<String> _getNextRoute() async {
     final authService = locator<GoogleAuthService>();
-    if (authService.currentUser == null) {
-      Navigator.of(context).pushReplacementNamed(SignInPage.routeName);
-    } else {
-      Navigator.of(context).pushReplacementNamed(ChannelPage.routeName);
-    }
+    return authService.currentUser == null
+        ? SignInPage.routeName
+        : ChannelPage.routeName;
+  }
+
+  void _navigate() async {
+    final nextRoute = await _nextRouteFuture;
+    if (!mounted) return;
+    Navigator.of(context).pushReplacementNamed(nextRoute);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(),
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          LottieBuilder.asset(
+            'assets/lottie/splash.json',
+            controller: _controller,
+            height: 400,
+            width: 400,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Starting up...',
+              style: Theme.of(context).textTheme.headline5,
+            ),
+          ),
+        ],
       ),
     );
   }

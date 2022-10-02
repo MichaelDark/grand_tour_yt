@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'di/locator.dart';
@@ -19,34 +20,57 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Grand Tour YT Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.red,
+        scaffoldBackgroundColor: Colors.red.shade50,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+              ),
+            ),
+          ),
+        ),
       ),
-      routes: {
-        SplashPage.routeName: (_) => const SplashPage(),
-        SignInPage.routeName: (_) => const SignInPage(),
-        ChannelPage.routeName: (_) => const ChannelPage(),
-        PlaylistPage.routeName: (_) => const PlaylistPage(),
-        VideoPage.routeName: (_) => const VideoPage(),
+      onGenerateRoute: (settings) {
+        final Map<String, WidgetBuilder> routes = {
+          SplashPage.routeName: (_) => const SplashPage(),
+          SignInPage.routeName: (_) => const SignInPage(),
+          ChannelPage.routeName: (_) => const ChannelPage(),
+          PlaylistPage.routeName: (_) => const PlaylistPage(),
+          VideoPage.routeName: (_) => const VideoPage(),
+        };
+
+        final builder = routes[settings.name];
+
+        if (builder != null) {
+          return CupertinoPageRoute(builder: builder, settings: settings);
+        }
+
+        // return MaterialPageRoute(builder: (_) => UnknownPage());
+        throw 'Unknown route';
       },
-      debugShowCheckedModeBanner: false,
-      builder: (context, child) {
-        Widget app = child!;
-
-        app = ScrollConfiguration(
-          behavior: const CustomScrollBehavior(),
-          child: app,
-        );
-
-        app = Banner(
-          message: 'demo',
-          location: BannerLocation.bottomEnd,
-          child: app,
-        );
-
-        return app;
-      },
+      builder: _buildApp,
     );
+  }
+
+  Widget _buildApp(BuildContext context, Widget? child) {
+    Widget app = child!;
+
+    app = ScrollConfiguration(
+      behavior: const CustomScrollBehavior(),
+      child: app,
+    );
+
+    app = Banner(
+      message: 'demo',
+      location: BannerLocation.bottomEnd,
+      child: app,
+    );
+
+    return app;
   }
 }
 

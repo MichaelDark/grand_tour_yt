@@ -8,8 +8,8 @@ import '../widgets/channel_description.dart';
 import '../widgets/channel_image.dart';
 import '../widgets/paginated_horizontal_list.dart';
 import '../widgets/resource_builder.dart';
-import '../widgets/tiles/playlist_item_list_tile.dart';
 import '../widgets/tiles/playlist_list_tile.dart';
+import 'playlist_page.dart';
 
 class ChannelPage extends StatelessWidget {
   static const routeName = '/channel';
@@ -67,23 +67,24 @@ class ChannelView extends StatelessWidget {
             description: channel.snippet!.description!,
           ),
         ),
+        const SliverToBoxAdapter(child: Divider(height: 1)),
         SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
-            child: Text(
-              'Uploads',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: PaginatedHorizontalList<PlaylistItem>(
-            pagintatedResource: uploadsViewModel.playlistItemsResource,
-            itemBuilder: (_, item, __) {
-              return PlaylistItemListTile(playlistItem: item);
+          child: ListTile(
+            leading: const Icon(Icons.cloud_upload_rounded),
+            trailing: const Icon(Icons.arrow_forward_ios_rounded),
+            title: const Text('Uploaded videos'),
+            onTap: () {
+              Navigator.of(context).pushNamed(
+                PlaylistPage.routeName,
+                arguments: PlaylistPageArguments(
+                  title: 'Uploaded videos',
+                  playlistId: uploadsId,
+                ),
+              );
             },
           ),
         ),
+        const SliverToBoxAdapter(child: Divider(height: 1)),
         SliverToBoxAdapter(
           child: Padding(
             padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
