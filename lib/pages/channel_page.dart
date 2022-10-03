@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:googleapis/youtube/v3.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../di/locator.dart';
-import '../models/paginated_ui_resource.dart';
-import '../providers/youtube_channel_view_model.dart';
+import '../models/resources/paginated_ui_resource.dart';
+import '../models/youtube/youtube_channel.dart';
+import '../models/youtube/youtube_playlist.dart';
+import '../utils/build_context_ext.dart';
+import '../view_models/channel_view_model.dart';
 import '../widgets/channel_description.dart';
 import '../widgets/channel_image.dart';
-import '../widgets/paginated_horizontal_list.dart';
-import '../widgets/resource_builder.dart';
-import '../widgets/tiles/playlist_list_tile.dart';
+import '../widgets/resources/resource_builder.dart';
+import '../widgets/tiles/youtube_playlist_list_tile.dart';
 import 'playlist_page.dart';
+
+class ChannelPageArguments {
+  final String channelId;
+
+  const ChannelPageArguments({required this.channelId});
+}
 
 class ChannelPage extends StatelessWidget {
   static const routeName = '/channel';
@@ -18,7 +26,8 @@ class ChannelPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = locator<YoutubeChannelViewModel>();
+    final args = context.getArgs<ChannelPageArguments>();
+    final viewModel = locator<ChannelViewModelFactory>().get(args.channelId);
 
     return SafeArea(
       child: Scaffold(
@@ -37,8 +46,8 @@ class ChannelPage extends StatelessWidget {
 }
 
 class ChannelView extends StatelessWidget {
-  final Channel channel;
-  final PagintatedUiResource<Playlist, String?> playlistsResource;
+  final YoutubeChannel channel;
+  final PaginatedUiResource<YoutubePlaylist> playlistsResource;
 
   const ChannelView({
     super.key,
@@ -48,23 +57,19 @@ class ChannelView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModelFactory = locator<YoutubePlaylistViewModelFactory>();
-    final uploadsId = channel.contentDetails!.relatedPlaylists!.uploads!;
-    final uploadsViewModel = viewModelFactory.createPaginated(uploadsId);
-
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
           child: Center(
             child: ChannelImage(
-              thumbnailDetails: channel.snippet!.thumbnails!,
+              thumbnail: channel.thumbnail,
             ),
           ),
         ),
         SliverToBoxAdapter(
           child: ChannelDescription(
-            title: channel.snippet!.title!,
-            description: channel.snippet!.description!,
+            title: channel.title,
+            description: channel.description,
           ),
         ),
         const SliverToBoxAdapter(child: Divider(height: 1)),
@@ -78,7 +83,7 @@ class ChannelView extends StatelessWidget {
                 PlaylistPage.routeName,
                 arguments: PlaylistPageArguments(
                   title: 'Uploaded videos',
-                  playlistId: uploadsId,
+                  playlistId: channel.uploadsPlaylistId,
                 ),
               );
             },
@@ -94,11 +99,11 @@ class ChannelView extends StatelessWidget {
             ),
           ),
         ),
-        SliverToBoxAdapter(
-          child: PaginatedHorizontalList<Playlist>(
-            pagintatedResource: playlistsResource,
+        PagedSliverList(
+          pagingController: playlistsResource.controller,
+          builderDelegate: PagedChildBuilderDelegate<YoutubePlaylist>(
             itemBuilder: (_, item, __) {
-              return PlaylistListTile(playlist: item);
+              return YoutubePlaylistListTile(playlist: item);
             },
           ),
         ),

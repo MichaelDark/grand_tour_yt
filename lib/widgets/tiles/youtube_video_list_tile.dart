@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:googleapis/youtube/v3.dart';
-import 'package:grandtouryt/utils/thumbnails_extension.dart';
 
+import '../../models/youtube/youtube_video.dart';
 import '../../pages/video_page.dart';
+import '../../utils/youtube_thumbnail_ext.dart';
 import 'image_list_tile.dart';
 
-class PlaylistItemListTile extends StatelessWidget {
-  final PlaylistItem playlistItem;
+class YoutubeVideoListTile extends StatelessWidget {
+  final YoutubeVideo video;
 
-  const PlaylistItemListTile({super.key, required this.playlistItem});
+  const YoutubeVideoListTile({super.key, required this.video});
 
   @override
   Widget build(BuildContext context) {
     return ImageListTile(
-      title: playlistItem.snippet!.title!,
-      image: playlistItem.snippet!.thumbnails!.image,
+      title: video.title,
+      image: video.thumbnail.image,
       additionalWidgets: [
         Positioned(
           top: 8,
@@ -32,8 +32,8 @@ class PlaylistItemListTile extends StatelessWidget {
         Navigator.of(context).pushNamed(
           VideoPage.routeName,
           arguments: VideoPageArguments(
-            title: playlistItem.snippet!.title!,
-            videoId: playlistItem.contentDetails!.videoId!,
+            title: video.title,
+            videoId: video.id,
           ),
         );
       },

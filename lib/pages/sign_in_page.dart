@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:grandtouryt/services/google_auth_service.dart';
 import 'package:lottie/lottie.dart';
 
 import '../di/locator.dart';
+import '../models/youtube/youtube_channel.dart';
+import '../services/google_auth_service.dart';
 import '../widgets/show_up.dart';
 import 'channel_page.dart';
 
@@ -19,7 +20,12 @@ class _SignInPageState extends State<SignInPage> {
   void _onSignIn() async {
     await locator<GoogleAuthService>().signIn();
     if (!mounted) return;
-    Navigator.of(context).pushReplacementNamed(ChannelPage.routeName);
+    Navigator.of(context).pushReplacementNamed(
+      ChannelPage.routeName,
+      arguments: const ChannelPageArguments(
+        channelId: YoutubeChannel.grandTourChannelId,
+      ),
+    );
   }
 
   @override

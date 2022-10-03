@@ -1,39 +1,70 @@
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+import '../utils/build_context_ext.dart';
+
 class VideoPageArguments {
   final String title;
   final String videoId;
 
-  VideoPageArguments({required this.title, required this.videoId});
+  const VideoPageArguments({required this.title, required this.videoId});
 }
 
-class VideoPage extends StatefulWidget {
+class VideoPage extends StatelessWidget {
   static const routeName = '/video';
 
   const VideoPage({Key? key}) : super(key: key);
 
   @override
-  State<VideoPage> createState() => _VideoPageState();
+  Widget build(BuildContext context) {
+    final args = context.getArgs<VideoPageArguments>();
+
+    return _VideoPage(
+      key: UniqueKey(),
+      title: args.title,
+      videoId: args.videoId,
+    );
+  }
 }
 
-class _VideoPageState extends State<VideoPage> {
-  YoutubePlayerController? _controller;
+class _VideoPage extends StatefulWidget {
+  final String title;
+  final String videoId;
+
+  const _VideoPage({
+    super.key,
+    required this.title,
+    required this.videoId,
+  });
+
+  @override
+  State<_VideoPage> createState() => _VideoPageState();
+}
+
+class _VideoPageState extends State<_VideoPage> {
+  late YoutubePlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = YoutubePlayerController(
+      initialVideoId: widget.videoId,
+      flags: const YoutubePlayerFlags(autoPlay: true, mute: false),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final modaRoute = ModalRoute.of(context)!;
-    final args = modaRoute.settings.arguments as VideoPageArguments;
-
-    _controller ??= YoutubePlayerController(
-      initialVideoId: args.videoId,
-      flags: const YoutubePlayerFlags(autoPlay: true, mute: false),
-    );
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(args.title),
+          title: Text(widget.title),
           automaticallyImplyLeading: true,
         ),
         body: SafeArea(
@@ -41,7 +72,7 @@ class _VideoPageState extends State<VideoPage> {
             slivers: [
               SliverToBoxAdapter(
                 child: YoutubePlayer(
-                  controller: _controller!,
+                  controller: _controller,
                   showVideoProgressIndicator: true,
                   progressColors: const ProgressBarColors(
                     playedColor: Colors.red,

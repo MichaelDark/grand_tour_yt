@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:googleapis/youtube/v3.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../di/locator.dart';
-import '../providers/youtube_channel_view_model.dart';
-import '../widgets/tiles/playlist_item_list_tile.dart';
+import '../models/youtube/youtube_video.dart';
+import '../utils/build_context_ext.dart';
+import '../view_models/playlist_view_model.dart';
+import '../widgets/tiles/youtube_video_list_tile.dart';
 
 class PlaylistPageArguments {
   final String title;
   final String playlistId;
 
-  PlaylistPageArguments({required this.title, required this.playlistId});
+  const PlaylistPageArguments({required this.title, required this.playlistId});
 }
 
 class PlaylistPage extends StatefulWidget {
@@ -25,10 +26,8 @@ class PlaylistPage extends StatefulWidget {
 class _PlaylistPageState extends State<PlaylistPage> {
   @override
   Widget build(BuildContext context) {
-    final modaRoute = ModalRoute.of(context)!;
-    final args = modaRoute.settings.arguments as PlaylistPageArguments;
-    final viewModelFactory = locator<YoutubePlaylistViewModelFactory>();
-    final viewModel = viewModelFactory.createPaginated(args.playlistId);
+    final args = context.getArgs<PlaylistPageArguments>();
+    final viewModel = locator<PlaylistViewModelFactory>().get(args.playlistId);
 
     return SafeArea(
       child: Scaffold(
@@ -41,9 +40,9 @@ class _PlaylistPageState extends State<PlaylistPage> {
             slivers: [
               PagedSliverList(
                 pagingController: viewModel.playlistItemsResource.controller,
-                builderDelegate: PagedChildBuilderDelegate<PlaylistItem>(
+                builderDelegate: PagedChildBuilderDelegate<YoutubeVideo>(
                   itemBuilder: (_, item, __) {
-                    return PlaylistItemListTile(playlistItem: item);
+                    return YoutubeVideoListTile(video: item);
                   },
                 ),
               ),

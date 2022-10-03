@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:googleapis/youtube/v3.dart';
-import 'package:grandtouryt/services/google_auth_service.dart';
+import 'package:googleapis/youtube/v3.dart' show YouTubeApi;
 import 'package:injectable/injectable.dart';
-// ignore: depend_on_referenced_packages
+
+import '../models/youtube/youtube_channel.dart';
+import '../models/youtube/youtube_playlist.dart';
+import '../models/youtube/youtube_response.dart';
+import '../models/youtube/youtube_video.dart';
+import 'google_auth_service.dart';
+import 'youtube_mapper.dart';
 
 @singleton
 class YoutubeService {
-  static const grandTourYoutubeChannelId = 'UCZ1Sc5xjWpUnp_o_lUTkvgQ';
-
   final GoogleAuthService _authService;
-  Future<YouTubeApi>? _youtubeApi;
+  final YoutubeMapper _mapper;
 
-  YoutubeService(this._authService);
+  YoutubeService(this._authService, this._mapper);
+
+  Future<YouTubeApi>? _youtubeApi;
 
   @visibleForTesting
   Future<YouTubeApi> getApi() async {
@@ -28,28 +33,30 @@ class YoutubeService {
     return YouTubeApi(client);
   }
 
-  Future<Channel> fetchChannel() async {
+  Future<YoutubeChannel> fetchChannel(String channelId) async {
     final api = await getApi();
     final response = await api.channels.list(
       ['snippet', 'contentDetails', 'statistics', 'status'],
-      id: [grandTourYoutubeChannelId],
+      id: [channelId],
       maxResults: 1,
     );
-    final channel = response.items!.first;
-    return channel;
+    return _mapper.mapChannel(response);
   }
 
-  Future<PlaylistListResponse> fetchPlaylistsPage(String? pageToken) async {
+  Future<YoutubeResponse<YoutubePlaylist>> fetchPlaylistsPage(
+    String channelId,
+    String? pageToken,
+  ) async {
     final api = await getApi();
     final response = await api.playlists.list(
       ['contentDetails', 'id', 'localizations', 'player', 'snippet', 'status'],
-      channelId: grandTourYoutubeChannelId,
+      channelId: channelId,
       pageToken: pageToken,
     );
-    return response;
+    return _mapper.mapPlaylistResponse(response);
   }
 
-  Future<PlaylistItemListResponse> fetchPlaylistPage(
+  Future<YoutubeResponse<YoutubeVideo>> fetchPlaylistPage(
     String id,
     String? pageToken,
   ) async {
@@ -59,6 +66,6 @@ class YoutubeService {
       playlistId: id,
       pageToken: pageToken,
     );
-    return response;
+    return _mapper.mapPlaylistItemResponse(response);
   }
 }

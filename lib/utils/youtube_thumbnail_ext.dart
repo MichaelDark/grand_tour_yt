@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:googleapis/youtube/v3.dart';
 
-extension ThumbnailDetailsExt on ThumbnailDetails {
+import '../models/youtube/youtube_thumbnail.dart';
+
+extension YoutubeThumbnailExt on YoutubeThumbnail {
   ImageProvider get image {
-    final imageUrl = high?.url ??
-        medium?.url ??
-        standard?.url ??
-        maxres?.url ??
-        default_?.url;
+    final imageUrl = this.imageUrl;
     final imageUncasted = imageUrl == null
         ? const AssetImage('assets/white_noise.png')
         : NetworkImage(imageUrl);

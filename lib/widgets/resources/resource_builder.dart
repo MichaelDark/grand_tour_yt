@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/ui_resource.dart';
+import '../../models/resources/ui_resource.dart';
 import 'error_view.dart';
 import 'loading_view.dart';
 

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:googleapis/youtube/v3.dart';
-import 'package:grandtouryt/utils/thumbnails_extension.dart';
+
+import '../models/youtube/youtube_thumbnail.dart';
+import '../utils/youtube_thumbnail_ext.dart';
 
 class ChannelImage extends StatelessWidget {
-  final ThumbnailDetails thumbnailDetails;
+  final YoutubeThumbnail thumbnail;
 
-  const ChannelImage({super.key, required this.thumbnailDetails});
+  const ChannelImage({super.key, required this.thumbnail});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class ChannelImage extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: Image(
-          image: thumbnailDetails.image,
+          image: thumbnail.image,
           height: 128,
           width: 128,
           fit: BoxFit.contain,
