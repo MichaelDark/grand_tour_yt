@@ -17,6 +17,7 @@ class ShowUp extends StatefulWidget {
 }
 
 class _ShowUpState extends State<ShowUp> with TickerProviderStateMixin {
+  late Timer _timer;
   late AnimationController _controller;
   late Animation<Offset> _offsetAnimation;
 
@@ -33,11 +34,12 @@ class _ShowUpState extends State<ShowUp> with TickerProviderStateMixin {
         CurvedAnimation(curve: Curves.decelerate, parent: _controller);
     _offsetAnimation = offsetTween.animate(offsetAnimation);
 
-    Timer(widget.delay, () => _controller.forward());
+    _timer = Timer(widget.delay, () => _controller.forward());
   }
 
   @override
   void dispose() {
+    _timer.cancel();
     _controller.dispose();
     super.dispose();
   }

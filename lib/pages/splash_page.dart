@@ -45,7 +45,8 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
 
   Future<_NextRoute> _getNextRoute() async {
     final authService = locator<GoogleAuthService>();
-    return authService.currentUser == null
+    final currentUser = await authService.signInSilently();
+    return currentUser == null
         ? const _NextRoute(SignInPage.routeName)
         : const _NextRoute(
             ChannelPage.routeName,

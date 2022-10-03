@@ -20,6 +20,15 @@ class GoogleAuthService {
 
   GoogleAuthService(this._log);
 
+  Future<GoogleSignInAccount?> signInSilently() async {
+    try {
+      return await _googleSignIn.signInSilently();
+    } on PlatformException {
+      _log.d('Sign in silently failed :(');
+      rethrow;
+    }
+  }
+
   Future<void> signIn() async {
     try {
       await _googleSignIn.signIn();
@@ -28,8 +37,6 @@ class GoogleAuthService {
       rethrow;
     }
   }
-
-  GoogleSignInAccount? get currentUser => _googleSignIn.currentUser;
 
   Future<http.Client?> createAuthenticatedHttpClient() async {
     return await _googleSignIn.authenticatedClient();
