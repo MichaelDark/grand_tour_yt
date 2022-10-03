@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+import '../di/locator.dart';
+import '../l10n/youtube_strings.dart';
+import '../models/youtube/youtube_video.dart';
 import '../utils/build_context_ext.dart';
+import '../view_models/video_view_model.dart';
+import '../widgets/resources/resource_builder.dart';
 
 class VideoPageArguments {
   final String Function(BuildContext) onGenerateTitle;
@@ -52,7 +58,12 @@ class _VideoPageState extends State<_VideoPage> {
     super.initState();
     _controller = YoutubePlayerController(
       initialVideoId: widget.videoId,
-      flags: const YoutubePlayerFlags(autoPlay: true, mute: false),
+      flags: const YoutubePlayerFlags(
+        // autoPlay: true,
+        autoPlay: false,
+        mute: false,
+        showLiveFullscreenButton: false,
+      ),
     );
   }
 
@@ -64,29 +75,175 @@ class _VideoPageState extends State<_VideoPage> {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = locator<VideoViewModelFactory>().get(widget.videoId);
+    final mediaQuery = MediaQuery.of(context);
+    const aspectRatio = 16 / 9;
+    final size = mediaQuery.size;
+    final videoWidth = size.width;
+    final videoHeight = size.width / aspectRatio;
+    final videoSize = Size(videoWidth, videoHeight);
+
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-          automaticallyImplyLeading: true,
-        ),
         body: SafeArea(
-          child: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: YoutubePlayer(
-                  controller: _controller,
-                  showVideoProgressIndicator: true,
-                  progressColors: const ProgressBarColors(
-                    playedColor: Colors.red,
-                    handleColor: Colors.redAccent,
-                  ),
-                  // onReady: () => _controller!.addListener(listener),
-                ),
+          child: YoutubePlayerBuilder(
+            player: YoutubePlayer(
+              controller: _controller,
+              showVideoProgressIndicator: true,
+              progressColors: const ProgressBarColors(
+                playedColor: Colors.red,
+                handleColor: Colors.redAccent,
               ),
-            ],
+            ),
+            builder: (context, player) {
+              return CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    title: Text(widget.title),
+                    automaticallyImplyLeading: true,
+                    elevation: 8,
+                    pinned: true,
+                    bottom: PreferredSize(
+                      preferredSize: videoSize,
+                      child: player,
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: ResourceBuilder(
+                      resource: viewModel.videoResource,
+                      builder: (context, video) {
+                        return VideoDetailsView(video: video);
+                      },
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
         ),
+      ),
+    );
+  }
+}
+
+class VideoDetailsView extends StatelessWidget {
+  final YoutubeVideo video;
+
+  const VideoDetailsView({super.key, required this.video});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              video.title,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(4),
+                  child: Text(
+                    YoutubeStrings.of(context).nViews(video.viewCount),
+                    style: Theme.of(context).textTheme.caption,
+                  ),
+                ),
+                Text(
+                  '•',
+                  style: Theme.of(context).textTheme.caption,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(4),
+                  child: Text(
+                    YoutubeStrings.of(context).videoDate(
+                      video.publishedAt,
+                      timeago.format(
+                        video.publishedAt,
+                        locale: Localizations.localeOf(context).toLanguageTag(),
+                      ),
+                    ),
+                    style: Theme.of(context).textTheme.caption,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              alignment: WrapAlignment.start,
+              runAlignment: WrapAlignment.start,
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                IconedLabel(
+                  icon: const Icon(Icons.thumb_up_alt_rounded),
+                  label: '${video.likeCount}',
+                ),
+                IconedLabel(
+                  icon: const Icon(Icons.comment_rounded),
+                  label: '${video.commentCount}',
+                ),
+                if (video.licensedContent) ...[
+                  IconedLabel(
+                    icon: const Icon(Icons.verified_rounded),
+                    label: YoutubeStrings.of(context).videoLicencedLabel,
+                  ),
+                ],
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              video.description,
+              style: Theme.of(context).textTheme.subtitle2,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class IconedLabel extends StatelessWidget {
+  final Widget icon;
+  final String label;
+
+  const IconedLabel({
+    super.key,
+    required this.icon,
+    required this.label,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return IntrinsicWidth(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: icon,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Text(
+              label,
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+          ),
+        ],
       ),
     );
   }

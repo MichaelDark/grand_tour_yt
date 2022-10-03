@@ -53,8 +53,30 @@ class YoutubeStringsEn extends YoutubeStrings {
   }
 
   @override
+  String nViews(num count) {
+    return intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      zero: '0 views',
+      one: '$count view',
+      other: '$count views',
+    );
+  }
+
+  @override
+  String videoDate(DateTime date, String ago) {
+    final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
+    final String dateString = dateDateFormat.format(date);
+
+    return '$dateString ($ago)';
+  }
+
+  @override
   String get uploadedVideosCaption => 'Uploaded videos';
 
   @override
   String get playlistsCaption => 'Playlists';
+
+  @override
+  String get videoLicencedLabel => 'Licenced';
 }

@@ -22,6 +22,7 @@ dependencies:
   google_sign_in: ^5.4.2
   googleapis: ^9.2.0
   extension_google_sign_in_as_googleapis_auth: ^2.0.7
+  iso_duration_parser: ^1.1.1
 
   # UI
   lottie: ^1.4.3
@@ -41,7 +42,7 @@ dev_dependencies:
   flutter_gen_runner: ^5.0.1
 
 flutter:
-  generate: true
+  generate: false
   uses-material-design: true
   assets:
     - assets/lottie/

@@ -51,8 +51,30 @@ class YoutubeStringsUk extends YoutubeStrings {
   }
 
   @override
+  String nViews(num count) {
+    return intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      zero: '0 переглядів',
+      one: '$count перегляд',
+      other: '$count переглядів',
+    );
+  }
+
+  @override
+  String videoDate(DateTime date, String ago) {
+    final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
+    final String dateString = dateDateFormat.format(date);
+
+    return '$dateString ($ago)';
+  }
+
+  @override
   String get uploadedVideosCaption => 'Завантажені відео';
 
   @override
   String get playlistsCaption => 'Плейлисти';
+
+  @override
+  String get videoLicencedLabel => 'Ліцензоване';
 }

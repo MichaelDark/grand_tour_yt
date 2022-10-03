@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 
 import '../models/youtube/youtube_channel.dart';
 import '../models/youtube/youtube_playlist.dart';
+import '../models/youtube/youtube_playlist_item.dart';
 import '../models/youtube/youtube_response.dart';
 import '../models/youtube/youtube_video.dart';
 import 'google_auth_service.dart';
@@ -56,17 +57,26 @@ class YoutubeService {
     return _mapper.mapPlaylistResponse(response);
   }
 
-  Future<YoutubeResponse<YoutubeVideo>> fetchPlaylistPage(
+  Future<YoutubeResponse<YoutubePlaylistItem>> fetchPlaylistPage(
     String id,
     String? pageToken,
   ) async {
     final api = await getApi();
     final response = await api.playlistItems.list(
-      Parts.playlistItems,
+      Parts.playlist,
       playlistId: id,
       pageToken: pageToken,
     );
     return _mapper.mapPlaylistItemResponse(response);
+  }
+
+  Future<YoutubeVideo> fetchVideo(String id) async {
+    final api = await getApi();
+    final response = await api.videos.list(
+      Parts.video,
+      id: [id],
+    );
+    return _mapper.mapVideo(response);
   }
 }
 
@@ -75,20 +85,44 @@ abstract class Parts {
     'snippet',
     'contentDetails',
     'statistics',
-    'status',
+
+    // unused
+    // 'status',
   ];
   static const playlists = [
-    'contentDetails',
     'id',
-    'localizations',
-    'player',
     'snippet',
-    'status',
+
+    // unused
+    // 'contentDetails',
+    // 'localizations',
+    // 'player',
+    // 'status',
   ];
-  static const playlistItems = [
+  static const playlist = [
     'contentDetails',
     'id',
     'snippet',
-    'status',
+    // unused
+    // 'status',
+  ];
+  static const video = [
+    'contentDetails',
+    'id',
+    'snippet',
+    'statistics',
+
+    // unused
+    // 'liveStreamingDetails',
+    // 'localizations',
+    // 'player',
+    // 'recordingDetails',
+    // 'status',
+    // 'topicDetails',
+
+    // available only for file owner
+    // 'fileDetails',
+    // 'processingDetails',
+    // 'suggestions',
   ];
 }

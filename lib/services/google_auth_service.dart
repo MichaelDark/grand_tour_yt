@@ -11,7 +11,6 @@ import 'logging_service.dart';
 class GoogleAuthService {
   static const _oauthScopes = [
     'email',
-    'https://www.googleapis.com/auth/youtube',
     'https://www.googleapis.com/auth/youtube.readonly',
   ];
 

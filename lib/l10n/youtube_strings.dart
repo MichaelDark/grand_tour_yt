@@ -153,6 +153,18 @@ abstract class YoutubeStrings {
   /// **'{count,plural, =0{0 videos} =1{{count} video} other{{count} videos}}'**
   String nVideos(num count);
 
+  /// No description provided for @nViews.
+  ///
+  /// In en, this message translates to:
+  /// **'{count,plural, =0{0 views} =1{{count} view} other{{count} views}}'**
+  String nViews(num count);
+
+  /// No description provided for @videoDate.
+  ///
+  /// In en, this message translates to:
+  /// **'{date} ({ago})'**
+  String videoDate(DateTime date, String ago);
+
   /// No description provided for @uploadedVideosCaption.
   ///
   /// In en, this message translates to:
@@ -164,6 +176,12 @@ abstract class YoutubeStrings {
   /// In en, this message translates to:
   /// **'Playlists'**
   String get playlistsCaption;
+
+  /// No description provided for @videoLicencedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Licenced'**
+  String get videoLicencedLabel;
 }
 
 class _YoutubeStringsDelegate extends LocalizationsDelegate<YoutubeStrings> {

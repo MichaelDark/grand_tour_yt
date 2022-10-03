@@ -27,6 +27,27 @@
             }
         }
     },
+    "nViews": "{count,plural, =0{0 переглядів} =1{{count} перегляд} other{{count} переглядів}}",
+    "@nViews": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "videoDate": "{date} ({ago})",
+    "@videoDate": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd"
+            },
+            "ago": {
+                "type": "String"
+            }
+        }
+    },
     "uploadedVideosCaption": "Завантажені відео",
-    "playlistsCaption": "Плейлисти"
+    "playlistsCaption": "Плейлисти",
+    "videoLicencedLabel": "Ліцензоване"
 }

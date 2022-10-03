@@ -2,7 +2,7 @@ import 'package:injectable/injectable.dart';
 
 import '../models/resources/paginated_ui_resource.dart';
 import '../models/resources/paginated_youtube_ui_resource.dart';
-import '../models/youtube/youtube_video.dart';
+import '../models/youtube/youtube_playlist_item.dart';
 import '../services/youtube_service.dart';
 
 @lazySingleton
@@ -22,7 +22,7 @@ class PlaylistViewModelFactory {
 }
 
 class PlaylistViewModel {
-  final PaginatedUiResource<YoutubeVideo> playlistItemsResource;
+  final PaginatedUiResource<YoutubePlaylistItem> playlistItemsResource;
 
   PlaylistViewModel(YoutubeService service, String playlistId)
       : playlistItemsResource = PaginatedYoutubeUiResource(

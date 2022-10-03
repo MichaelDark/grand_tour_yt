@@ -13,8 +13,9 @@ import '../services/logging_service.dart' as _i3;
 import '../services/youtube_mapper.dart' as _i4;
 import '../services/youtube_service.dart' as _i6;
 import '../view_models/channel_view_model.dart' as _i7;
-import '../view_models/playlist_view_model.dart'
-    as _i8; // ignore_for_file: unnecessary_lambdas
+import '../view_models/playlist_view_model.dart' as _i8;
+import '../view_models/video_view_model.dart'
+    as _i9; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -40,5 +41,7 @@ _i1.GetIt $initGetIt(
       () => _i7.ChannelViewModelFactory(get<_i6.YoutubeService>()));
   gh.lazySingleton<_i8.PlaylistViewModelFactory>(
       () => _i8.PlaylistViewModelFactory(get<_i6.YoutubeService>()));
+  gh.lazySingleton<_i9.VideoViewModelFactory>(
+      () => _i9.VideoViewModelFactory(get<_i6.YoutubeService>()));
   return get;
 }

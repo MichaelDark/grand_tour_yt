@@ -5,11 +5,15 @@ class YoutubeChannel {
   static const driveTribeChannelId = 'UChiwLDIBJrV5SxqdixMHmQA';
   static const whatsNextChannelId = 'UCLw8Z2SQXD_v07gei77mQiA';
   static const richardHammondChannelId = 'UCheylHaby1OjlvHZgqBlKZw';
+  static const smarterEveryDayChannelId = 'UC6107grRI4m0o2-emgoDnAA';
+  static const iDidAThingChannelId = 'UCJLZe_NoiG0hT7QCX_9vmqw';
   static const channels = [
     grandTourChannelId,
     driveTribeChannelId,
     whatsNextChannelId,
     richardHammondChannelId,
+    smarterEveryDayChannelId,
+    iDidAThingChannelId,
   ];
 
   final String id;

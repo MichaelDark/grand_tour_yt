@@ -3,11 +3,14 @@ import 'package:googleapis/youtube/v3.dart'
         ChannelListResponse,
         PlaylistItemListResponse,
         PlaylistListResponse,
-        ThumbnailDetails;
+        ThumbnailDetails,
+        VideoListResponse;
 import 'package:injectable/injectable.dart';
+import 'package:iso_duration_parser/iso_duration_parser.dart';
 
 import '../models/youtube/youtube_channel.dart';
 import '../models/youtube/youtube_playlist.dart';
+import '../models/youtube/youtube_playlist_item.dart';
 import '../models/youtube/youtube_response.dart';
 import '../models/youtube/youtube_thumbnail.dart';
 import '../models/youtube/youtube_video.dart';
@@ -22,8 +25,8 @@ class YoutubeMapper {
       title: channel.snippet!.title!,
       description: channel.snippet!.description!,
       uploadsPlaylistId: channel.contentDetails!.relatedPlaylists!.uploads!,
-      subscriberCount: channel.statistics!.subscriberCount!.tryParse(),
-      videoCount: channel.statistics!.videoCount!.tryParse(),
+      subscriberCount: channel.statistics!.subscriberCount!.tryParseInt(),
+      videoCount: channel.statistics!.videoCount!.tryParseInt(),
       thumbnail: YoutubeThumbnail(
         imageUrl: channel.snippet!.thumbnails!.maybeImageUrl,
       ),
@@ -36,12 +39,12 @@ class YoutubeMapper {
     return YoutubeResponse(
       items: response.items!
           .map(
-            (element) => YoutubePlaylist(
-              id: element.id!,
-              title: element.snippet!.title!,
-              description: element.snippet!.description!,
+            (playlist) => YoutubePlaylist(
+              id: playlist.id!,
+              title: playlist.snippet!.title!,
+              description: playlist.snippet!.description!,
               thumbnail: YoutubeThumbnail(
-                imageUrl: element.snippet!.thumbnails!.maybeImageUrl,
+                imageUrl: playlist.snippet!.thumbnails!.maybeImageUrl,
               ),
             ),
           )
@@ -50,34 +53,60 @@ class YoutubeMapper {
     );
   }
 
-  YoutubeResponse<YoutubeVideo> mapPlaylistItemResponse(
+  YoutubeResponse<YoutubePlaylistItem> mapPlaylistItemResponse(
     PlaylistItemListResponse response,
   ) {
     return YoutubeResponse(
       items: response.items!
           .map(
-            (element) => YoutubeVideo(
-              id: element.id!,
-              videoId: element.contentDetails!.videoId!,
-              title: element.snippet!.title!,
-              description: element.snippet!.description!,
+            (playlistItem) => YoutubePlaylistItem(
+              id: playlistItem.id!,
+              videoId: playlistItem.contentDetails!.videoId!,
+              title: playlistItem.snippet!.title!,
+              description: playlistItem.snippet!.description!,
               thumbnail: YoutubeThumbnail(
-                imageUrl: element.snippet!.thumbnails!.maybeImageUrl,
+                imageUrl: playlistItem.snippet!.thumbnails!.maybeImageUrl,
               ),
-              publishedAt: element.contentDetails!.videoPublishedAt,
+              publishedAt: playlistItem.contentDetails!.videoPublishedAt,
             ),
           )
           .toList(),
       nextPageToken: response.nextPageToken,
     );
   }
+
+  YoutubeVideo mapVideo(VideoListResponse response) {
+    final video = response.items!.first;
+
+    return YoutubeVideo(
+      id: video.id!,
+      title: video.snippet!.title!,
+      description: video.snippet!.description!,
+      thumbnail: YoutubeThumbnail(
+        imageUrl: video.snippet!.thumbnails!.maybeImageUrl,
+      ),
+      publishedAt: video.snippet!.publishedAt!,
+      duration: video.contentDetails!.duration!.parseIso8061Duration(),
+      licensedContent: video.contentDetails?.licensedContent ?? false,
+      commentCount: int.parse(video.statistics!.commentCount!),
+      likeCount: int.parse(video.statistics!.likeCount!),
+      viewCount: int.parse(video.statistics!.viewCount!),
+    );
+  }
 }
 
 extension on String? {
-  int? tryParse() {
+  int? tryParseInt() {
     final text = this;
     if (text == null) return null;
     return int.tryParse(text);
+  }
+
+  Duration parseIso8061Duration() {
+    final isoDuration = IsoDuration.parse(this!);
+    final DateTime dateTime = DateTime(2000, 1, 1);
+    final duration = isoDuration.withDate(dateTime).difference(dateTime);
+    return duration.abs();
   }
 }
 

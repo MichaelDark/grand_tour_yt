@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-import '../../models/youtube/youtube_video.dart';
+import '../../models/youtube/youtube_playlist_item.dart';
 import '../../pages/video_page.dart';
 import '../../utils/youtube_thumbnail_ext.dart';
 import 'image_list_tile.dart';
 
-class YoutubeVideoListTile extends StatelessWidget {
-  final YoutubeVideo video;
+class YoutubePlaylistItemListTile extends StatelessWidget {
+  final YoutubePlaylistItem playlistItem;
 
-  const YoutubeVideoListTile({super.key, required this.video});
+  const YoutubePlaylistItemListTile({super.key, required this.playlistItem});
 
   @override
   Widget build(BuildContext context) {
     return ImageListTile(
-      title: video.title,
-      image: video.thumbnail.image,
+      title: playlistItem.title,
+      image: playlistItem.thumbnail.image,
       additionalWidgets: [
         Positioned(
           top: 8,
@@ -29,7 +29,7 @@ class YoutubeVideoListTile extends StatelessWidget {
             ),
           ),
         ),
-        if (video.publishedAt != null)
+        if (playlistItem.publishedAt != null)
           Positioned(
             top: 8,
             left: 8,
@@ -37,7 +37,7 @@ class YoutubeVideoListTile extends StatelessWidget {
               backgroundColor: Theme.of(context).colorScheme.primary,
               label: Text(
                 timeago.format(
-                  video.publishedAt!,
+                  playlistItem.publishedAt!,
                   locale: Localizations.localeOf(context).toLanguageTag(),
                 ),
                 style: TextStyle(
@@ -51,8 +51,8 @@ class YoutubeVideoListTile extends StatelessWidget {
         Navigator.of(context).pushNamed(
           VideoPage.routeName,
           arguments: VideoPageArguments(
-            onGenerateTitle: (context) => video.title,
-            videoId: video.videoId,
+            onGenerateTitle: (context) => playlistItem.title,
+            videoId: playlistItem.videoId,
           ),
         );
       },

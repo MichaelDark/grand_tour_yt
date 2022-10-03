@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../di/locator.dart';
-import '../models/youtube/youtube_video.dart';
+import '../models/youtube/youtube_playlist_item.dart';
 import '../utils/build_context_ext.dart';
 import '../view_models/playlist_view_model.dart';
 import '../widgets/tiles/image_list_tile_shimmer.dart';
-import '../widgets/tiles/youtube_video_list_tile.dart';
+import '../widgets/tiles/youtube_playlist_item_list_tile.dart';
 
 class PlaylistPageArguments {
   final String Function(BuildContext) onGenerateTitle;
@@ -46,10 +46,11 @@ class _PlaylistPageState extends State<PlaylistPage> {
                 padding: const EdgeInsets.all(16),
                 sliver: PagedSliverList(
                   pagingController: viewModel.playlistItemsResource.controller,
-                  builderDelegate: PagedChildBuilderDelegate<YoutubeVideo>(
+                  builderDelegate:
+                      PagedChildBuilderDelegate<YoutubePlaylistItem>(
                     animateTransitions: true,
                     itemBuilder: (_, item, __) {
-                      return YoutubeVideoListTile(video: item);
+                      return YoutubePlaylistItemListTile(playlistItem: item);
                     },
                     newPageProgressIndicatorBuilder: (context) {
                       return const ImageListTileShimmer();

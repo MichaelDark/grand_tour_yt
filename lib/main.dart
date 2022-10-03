@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -13,10 +14,19 @@ import 'pages/splash_page.dart';
 import 'pages/video_page.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   configureDependencies();
-  timeago.setLocaleMessages('en', timeago.EnShortMessages());
-  timeago.setLocaleMessages('uk', timeago.UkShortMessages());
+
+  timeago.setLocaleMessages('en', timeago.EnMessages());
+  timeago.setLocaleMessages('uk', timeago.UkMessages());
   timeago.setDefaultLocale('en');
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
   runApp(const MyApp());
 }
 
