@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ImageListTile extends StatelessWidget {
-  static Color get backgroundColor => Colors.grey.shade300.withOpacity(0.8);
+  static Color getBackgroundColor(BuildContext context) {
+    return Theme.of(context).shadowColor;
+  }
 
   final String title;
   final ImageProvider image;
@@ -21,14 +23,14 @@ class ImageListTile extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.grey.shade200,
+            color: Theme.of(context).shadowColor,
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.shade300,
+                color: Theme.of(context).shadowColor,
                 blurRadius: 10,
                 spreadRadius: 0,
               ),
@@ -52,7 +54,7 @@ class ImageListTile extends StatelessWidget {
                     right: 0,
                     child: Container(
                       padding: const EdgeInsets.all(8),
-                      color: ImageListTile.backgroundColor,
+                      color: ImageListTile.getBackgroundColor(context),
                       child: Text(
                         title,
                         style: Theme.of(context).textTheme.bodyText1,

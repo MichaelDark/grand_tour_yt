@@ -4,8 +4,10 @@ import 'package:lottie/lottie.dart';
 import '../di/locator.dart';
 import '../models/youtube/youtube_channel.dart';
 import '../services/google_auth_service.dart';
+import '../utils/assets.gen.dart';
 import '../widgets/show_up.dart';
 import 'channel_page.dart';
+import 'channels_page.dart';
 
 class SignInPage extends StatefulWidget {
   static const routeName = '/sign_in';
@@ -21,7 +23,7 @@ class _SignInPageState extends State<SignInPage> {
     await locator<GoogleAuthService>().signIn();
     if (!mounted) return;
     Navigator.of(context).pushReplacementNamed(
-      ChannelPage.routeName,
+      ChannelsPage.routeName,
       arguments: const ChannelPageArguments(
         channelId: YoutubeChannel.grandTourChannelId,
       ),
@@ -37,7 +39,7 @@ class _SignInPageState extends State<SignInPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             LottieBuilder.asset(
-              'assets/lottie/login.json',
+              Assets.lottie.login,
               height: 400,
               width: 400,
               repeat: false,

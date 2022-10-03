@@ -25,6 +25,7 @@ dependencies:
   infinite_scroll_pagination: ^3.2.0
   youtube_player_flutter: ^8.1.0
   google_fonts: ^3.0.1
+  flutter_inset_box_shadow: ^1.0.8
 
 dev_dependencies:
   flutter_test:
@@ -32,6 +33,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   build_runner: ^2.2.1
   injectable_generator: ^1.5.4
+  flutter_gen_runner: ^5.0.1
 
 flutter:
   uses-material-design: true
@@ -52,3 +54,13 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
+
+flutter_gen:
+  output: lib/utils/ # Optional (default: lib/gen/)
+  line_length: 80 # Optional (default: 80)
+  assets:
+    enabled: true
+    outputs:
+      class_name: Assets
+      package_parameter_enabled: false
+      style: dot-delimiter

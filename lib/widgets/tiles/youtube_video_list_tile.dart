@@ -20,10 +20,11 @@ class YoutubeVideoListTile extends StatelessWidget {
           top: 8,
           right: 8,
           child: CircleAvatar(
-            backgroundColor: ImageListTile.backgroundColor.withOpacity(0.9),
-            child: const Icon(
+            backgroundColor:
+                ImageListTile.getBackgroundColor(context).withOpacity(0.9),
+            child: Icon(
               Icons.videocam_rounded,
-              color: Colors.red,
+              color: Theme.of(context).colorScheme.primary,
             ),
           ),
         ),

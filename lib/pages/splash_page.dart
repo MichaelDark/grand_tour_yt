@@ -4,7 +4,9 @@ import 'package:lottie/lottie.dart';
 import '../di/locator.dart';
 import '../models/youtube/youtube_channel.dart';
 import '../services/google_auth_service.dart';
+import '../utils/assets.gen.dart';
 import 'channel_page.dart';
+import 'channels_page.dart';
 import 'sign_in_page.dart';
 
 class SplashPage extends StatefulWidget {
@@ -25,22 +27,18 @@ class _NextRoute {
 
 class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   late Future<_NextRoute> _nextRouteFuture;
-  late final AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
+    _navigateAfterInit();
+  }
+
+  void _navigateAfterInit() async {
+    const splashDuration = Duration(seconds: 4);
     _nextRouteFuture = _getNextRoute();
-    _controller = AnimationController(
-      duration: const Duration(seconds: 4),
-      vsync: this,
-    );
-    _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _navigate();
-      }
-    });
-    _controller.forward();
+    await Future.wait([_nextRouteFuture, Future.delayed(splashDuration)]);
+    _navigate();
   }
 
   Future<_NextRoute> _getNextRoute() async {
@@ -49,7 +47,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     return currentUser == null
         ? const _NextRoute(SignInPage.routeName)
         : const _NextRoute(
-            ChannelPage.routeName,
+            ChannelsPage.routeName,
             arguments: ChannelPageArguments(
               channelId: YoutubeChannel.grandTourChannelId,
             ),
@@ -67,7 +65,6 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    _controller.dispose();
     super.dispose();
   }
 
@@ -78,10 +75,10 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           LottieBuilder.asset(
-            'assets/lottie/splash.json',
-            controller: _controller,
+            Assets.lottie.splashVideo,
             height: 400,
             width: 400,
+            repeat: true,
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),

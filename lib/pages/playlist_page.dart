@@ -38,12 +38,15 @@ class _PlaylistPageState extends State<PlaylistPage> {
         body: SafeArea(
           child: CustomScrollView(
             slivers: [
-              PagedSliverList(
-                pagingController: viewModel.playlistItemsResource.controller,
-                builderDelegate: PagedChildBuilderDelegate<YoutubeVideo>(
-                  itemBuilder: (_, item, __) {
-                    return YoutubeVideoListTile(video: item);
-                  },
+              SliverPadding(
+                padding: const EdgeInsets.all(16),
+                sliver: PagedSliverList(
+                  pagingController: viewModel.playlistItemsResource.controller,
+                  builderDelegate: PagedChildBuilderDelegate<YoutubeVideo>(
+                    itemBuilder: (_, item, __) {
+                      return YoutubeVideoListTile(video: item);
+                    },
+                  ),
                 ),
               ),
             ],

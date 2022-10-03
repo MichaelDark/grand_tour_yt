@@ -7,7 +7,6 @@ import '../models/youtube/youtube_channel.dart';
 import '../models/youtube/youtube_playlist.dart';
 import '../utils/build_context_ext.dart';
 import '../view_models/channel_view_model.dart';
-import '../widgets/channel_image.dart';
 import '../widgets/channel_info.dart';
 import '../widgets/resources/resource_builder.dart';
 import '../widgets/tiles/youtube_playlist_list_tile.dart';
@@ -60,13 +59,6 @@ class ChannelView extends StatelessWidget {
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
-          child: Center(
-            child: ChannelImage(
-              thumbnail: channel.thumbnail,
-            ),
-          ),
-        ),
-        SliverToBoxAdapter(
           child: ChannelInfo(
             channel: channel,
           ),
@@ -91,19 +83,22 @@ class ChannelView extends StatelessWidget {
         const SliverToBoxAdapter(child: Divider(height: 1)),
         SliverToBoxAdapter(
           child: Padding(
-            padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             child: Text(
               'Playlists',
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Theme.of(context).textTheme.headline6,
             ),
           ),
         ),
-        PagedSliverList(
-          pagingController: playlistsResource.controller,
-          builderDelegate: PagedChildBuilderDelegate<YoutubePlaylist>(
-            itemBuilder: (_, item, __) {
-              return YoutubePlaylistListTile(playlist: item);
-            },
+        SliverPadding(
+          padding: const EdgeInsets.all(16),
+          sliver: PagedSliverList(
+            pagingController: playlistsResource.controller,
+            builderDelegate: PagedChildBuilderDelegate<YoutubePlaylist>(
+              itemBuilder: (_, item, __) {
+                return YoutubePlaylistListTile(playlist: item);
+              },
+            ),
           ),
         ),
       ],

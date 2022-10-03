@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'di/locator.dart';
 import 'pages/channel_page.dart';
+import 'pages/channels_page.dart';
 import 'pages/playlist_page.dart';
 import 'pages/sign_in_page.dart';
 import 'pages/splash_page.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         final Map<String, WidgetBuilder> routes = {
           SplashPage.routeName: (_) => const SplashPage(),
           SignInPage.routeName: (_) => const SignInPage(),
+          ChannelsPage.routeName: (_) => const ChannelsPage(),
           ChannelPage.routeName: (_) => const ChannelPage(),
           PlaylistPage.routeName: (_) => const PlaylistPage(),
           VideoPage.routeName: (_) => const VideoPage(),
@@ -46,9 +48,8 @@ class MyApp extends StatelessWidget {
   }
 
   ThemeData _buildTheme() {
-    ThemeData baseTheme = ThemeData(
-      primarySwatch: Colors.red,
-      scaffoldBackgroundColor: Colors.red.shade50,
+    // ThemeData baseTheme = ThemeData.light().copyWith(
+    ThemeData baseTheme = ThemeData.dark().copyWith(
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
           shape: MaterialStateProperty.all(
@@ -61,6 +62,9 @@ class MyApp extends StatelessWidget {
     );
 
     return baseTheme.copyWith(
+      colorScheme: baseTheme.colorScheme.copyWith(
+        secondary: Colors.redAccent,
+      ),
       textTheme: GoogleFonts.abelTextTheme(baseTheme.textTheme),
     );
   }
