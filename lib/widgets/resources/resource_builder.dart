@@ -8,7 +8,7 @@ class ResourceBuilder<T> extends StatefulWidget {
   final UiResource<T> resource;
   final Widget Function(BuildContext, T) builder;
   final Widget Function(BuildContext)? loadingBuilder;
-  final Widget Function(BuildContext, dynamic)? errorBuilder;
+  final Widget Function(BuildContext, dynamic, VoidCallback)? errorBuilder;
 
   const ResourceBuilder({
     required this.resource,
@@ -36,7 +36,7 @@ class _ResourceBuilderState<T> extends State<ResourceBuilder<T>> {
       future: widget.resource.future,
       builder: (context, snap) {
         if (snap.hasError) {
-          return widget.errorBuilder?.call(context, snap.error) ??
+          return widget.errorBuilder?.call(context, snap.error, _retry) ??
               ErrorView(snap.error, retry: _retry);
         }
         if (snap.hasData) {

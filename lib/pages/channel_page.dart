@@ -10,6 +10,7 @@ import '../utils/build_context_ext.dart';
 import '../view_models/channel_view_model.dart';
 import '../widgets/channel_info.dart';
 import '../widgets/resources/resource_builder.dart';
+import '../widgets/tiles/image_list_tile_shimmer.dart';
 import '../widgets/tiles/youtube_playlist_list_tile.dart';
 import 'playlist_page.dart';
 
@@ -99,8 +100,15 @@ class ChannelView extends StatelessWidget {
           sliver: PagedSliverList(
             pagingController: playlistsResource.controller,
             builderDelegate: PagedChildBuilderDelegate<YoutubePlaylist>(
+              animateTransitions: true,
               itemBuilder: (_, item, __) {
                 return YoutubePlaylistListTile(playlist: item);
+              },
+              newPageProgressIndicatorBuilder: (context) {
+                return const ImageListTileShimmer();
+              },
+              firstPageProgressIndicatorBuilder: (context) {
+                return const ImageListTileShimmer();
               },
             ),
           ),

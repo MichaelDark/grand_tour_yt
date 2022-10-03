@@ -14,6 +14,8 @@ class ChannelViewModelFactory {
 
   ChannelViewModelFactory(this._service);
 
+  List<String> get channelIds => YoutubeChannel.channels;
+
   final Map<String, ChannelViewModel> _cache = {};
 
   ChannelViewModel get(String channelId) {

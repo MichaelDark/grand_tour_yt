@@ -5,6 +5,8 @@ import '../l10n/youtube_strings.dart';
 import '../models/youtube/youtube_channel.dart';
 import '../view_models/channel_view_model.dart';
 import '../widgets/resources/resource_builder.dart';
+import '../widgets/tiles/image_list_tile_error.dart';
+import '../widgets/tiles/image_list_tile_shimmer.dart';
 import '../widgets/tiles/youtube_channel_list_tile.dart';
 
 class ChannelsPage extends StatelessWidget {
@@ -15,7 +17,6 @@ class ChannelsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModelFactory = locator<ChannelViewModelFactory>();
-    const channelIds = YoutubeChannel.channels;
 
     return SafeArea(
       child: Scaffold(
@@ -31,16 +32,22 @@ class ChannelsPage extends StatelessWidget {
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    final channelId = channelIds[index];
+                    final channelId = viewModelFactory.channelIds[index];
                     final viewModel = viewModelFactory.get(channelId);
                     return ResourceBuilder<YoutubeChannel>(
                       resource: viewModel.channelResource,
+                      loadingBuilder: (context) {
+                        return const ImageListTileShimmer();
+                      },
+                      errorBuilder: (context, error, retry) {
+                        return ImageListTileError(error: error, retry: retry);
+                      },
                       builder: (context, channel) {
                         return YoutubeChannelListTile(channel: channel);
                       },
                     );
                   },
-                  childCount: channelIds.length,
+                  childCount: viewModelFactory.channelIds.length,
                 ),
               ),
             ),

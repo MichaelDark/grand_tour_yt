@@ -5,6 +5,7 @@ import '../di/locator.dart';
 import '../models/youtube/youtube_video.dart';
 import '../utils/build_context_ext.dart';
 import '../view_models/playlist_view_model.dart';
+import '../widgets/tiles/image_list_tile_shimmer.dart';
 import '../widgets/tiles/youtube_video_list_tile.dart';
 
 class PlaylistPageArguments {
@@ -46,8 +47,15 @@ class _PlaylistPageState extends State<PlaylistPage> {
                 sliver: PagedSliverList(
                   pagingController: viewModel.playlistItemsResource.controller,
                   builderDelegate: PagedChildBuilderDelegate<YoutubeVideo>(
+                    animateTransitions: true,
                     itemBuilder: (_, item, __) {
                       return YoutubeVideoListTile(video: item);
+                    },
+                    newPageProgressIndicatorBuilder: (context) {
+                      return const ImageListTileShimmer();
+                    },
+                    firstPageProgressIndicatorBuilder: (context) {
+                      return const ImageListTileShimmer();
                     },
                   ),
                 ),

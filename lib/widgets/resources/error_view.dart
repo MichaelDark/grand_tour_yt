@@ -30,7 +30,9 @@ class ErrorView extends StatelessWidget {
                 error.toString(),
                 textAlign: TextAlign.center,
                 maxLines: 4,
-                style: GoogleFonts.ubuntuMono(),
+                style: GoogleFonts.ubuntuMono().copyWith(
+                  color: Theme.of(context).errorColor,
+                ),
               ),
             ),
             if (retry != null)
