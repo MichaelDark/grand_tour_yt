@@ -4,10 +4,13 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../utils/build_context_ext.dart';
 
 class VideoPageArguments {
-  final String title;
+  final String Function(BuildContext) onGenerateTitle;
   final String videoId;
 
-  const VideoPageArguments({required this.title, required this.videoId});
+  const VideoPageArguments({
+    required this.onGenerateTitle,
+    required this.videoId,
+  });
 }
 
 class VideoPage extends StatelessWidget {
@@ -21,7 +24,7 @@ class VideoPage extends StatelessWidget {
 
     return _VideoPage(
       key: UniqueKey(),
-      title: args.title,
+      title: args.onGenerateTitle(context),
       videoId: args.videoId,
     );
   }

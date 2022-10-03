@@ -33,7 +33,7 @@ class YoutubePlaylistListTile extends StatelessWidget {
         Navigator.of(context).pushNamed(
           PlaylistPage.routeName,
           arguments: PlaylistPageArguments(
-            title: playlist.title,
+            onGenerateTitle: (context) => playlist.title,
             playlistId: playlist.id,
           ),
         );

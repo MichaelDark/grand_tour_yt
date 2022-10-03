@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../di/locator.dart';
+import '../l10n/youtube_strings.dart';
 import '../models/youtube/youtube_channel.dart';
 import '../view_models/channel_view_model.dart';
 import '../widgets/resources/resource_builder.dart';
@@ -20,9 +21,9 @@ class ChannelsPage extends StatelessWidget {
       child: Scaffold(
         body: CustomScrollView(
           slivers: [
-            const SliverAppBar(
-              leading: Icon(Icons.favorite_rounded),
-              title: Text('My favourite YouTube channels'),
+            SliverAppBar(
+              leading: const Icon(Icons.favorite_rounded),
+              title: Text(YoutubeStrings.of(context).channelsPageTitle),
               pinned: true,
             ),
             SliverPadding(

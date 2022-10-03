@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart'
     as inset_shadow;
 
+import '../l10n/youtube_strings.dart';
 import '../models/youtube/youtube_channel.dart';
 import '../utils/int_ext.dart';
 import '../utils/youtube_thumbnail_ext.dart';
@@ -69,10 +70,13 @@ class ChannelInfo extends StatelessWidget {
   List<Widget> _buildChips(BuildContext context) {
     return [
       if (channel.subscriberCount != null) ...[
-        '${channel.subscriberCount!.formatCount()} subscribers',
+        YoutubeStrings.of(context).nSubscribers(
+          channel.subscriberCount!,
+          channel.subscriberCount!.formatCount(),
+        ),
       ],
       if (channel.videoCount != null) ...[
-        '${channel.videoCount} videos',
+        YoutubeStrings.of(context).nVideos(channel.videoCount!),
       ],
     ]
         .map(

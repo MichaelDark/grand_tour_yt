@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../l10n/youtube_strings.dart';
 import '../../models/youtube/youtube_channel.dart';
 import '../../pages/channel_page.dart';
 import '../../utils/int_ext.dart';
@@ -24,7 +25,10 @@ class YoutubeChannelListTile extends StatelessWidget {
             child: RawChip(
               backgroundColor: Theme.of(context).colorScheme.primary,
               label: Text(
-                '${channel.subscriberCount!.formatCount()} subscribers',
+                YoutubeStrings.of(context).nSubscribers(
+                  channel.subscriberCount!,
+                  channel.subscriberCount!.formatCount(),
+                ),
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onPrimary,
                 ),

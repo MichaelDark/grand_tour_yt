@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../di/locator.dart';
+import '../l10n/youtube_strings.dart';
 import '../models/resources/paginated_ui_resource.dart';
 import '../models/youtube/youtube_channel.dart';
 import '../models/youtube/youtube_playlist.dart';
@@ -54,6 +55,17 @@ class ChannelView extends StatelessWidget {
     required this.playlistsResource,
   });
 
+  void _navigateToUploads(BuildContext context) {
+    Navigator.of(context).pushNamed(
+      PlaylistPage.routeName,
+      arguments: PlaylistPageArguments(
+        onGenerateTitle: (context) =>
+            YoutubeStrings.of(context).uploadedVideosCaption,
+        playlistId: channel.uploadsPlaylistId,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -68,16 +80,8 @@ class ChannelView extends StatelessWidget {
           child: ListTile(
             leading: const Icon(Icons.cloud_upload_rounded),
             trailing: const Icon(Icons.arrow_forward_ios_rounded),
-            title: const Text('Uploaded videos'),
-            onTap: () {
-              Navigator.of(context).pushNamed(
-                PlaylistPage.routeName,
-                arguments: PlaylistPageArguments(
-                  title: 'Uploaded videos',
-                  playlistId: channel.uploadsPlaylistId,
-                ),
-              );
-            },
+            title: Text(YoutubeStrings.of(context).uploadedVideosCaption),
+            onTap: () => _navigateToUploads(context),
           ),
         ),
         const SliverToBoxAdapter(child: Divider(height: 1)),
@@ -85,7 +89,7 @@ class ChannelView extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             child: Text(
-              'Playlists',
+              YoutubeStrings.of(context).playlistsCaption,
               style: Theme.of(context).textTheme.headline6,
             ),
           ),

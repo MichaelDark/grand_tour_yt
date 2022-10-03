@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 import '../di/locator.dart';
-import '../models/youtube/youtube_channel.dart';
+import '../l10n/youtube_strings.dart';
 import '../services/google_auth_service.dart';
 import '../utils/assets.gen.dart';
-import 'channel_page.dart';
 import 'channels_page.dart';
 import 'sign_in_page.dart';
 
@@ -18,15 +17,8 @@ class SplashPage extends StatefulWidget {
   State<SplashPage> createState() => _SplashPageState();
 }
 
-class _NextRoute {
-  final String path;
-  final Object? arguments;
-
-  const _NextRoute(this.path, {this.arguments});
-}
-
 class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
-  late Future<_NextRoute> _nextRouteFuture;
+  late Future<String> _nextRouteFuture;
 
   @override
   void initState() {
@@ -41,26 +33,16 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     _navigate();
   }
 
-  Future<_NextRoute> _getNextRoute() async {
+  Future<String> _getNextRoute() async {
     final authService = locator<GoogleAuthService>();
     final currentUser = await authService.signInSilently();
-    return currentUser == null
-        ? const _NextRoute(SignInPage.routeName)
-        : const _NextRoute(
-            ChannelsPage.routeName,
-            arguments: ChannelPageArguments(
-              channelId: YoutubeChannel.grandTourChannelId,
-            ),
-          );
+    return currentUser == null ? SignInPage.routeName : ChannelsPage.routeName;
   }
 
   void _navigate() async {
     final nextRoute = await _nextRouteFuture;
     if (!mounted) return;
-    Navigator.of(context).pushReplacementNamed(
-      nextRoute.path,
-      arguments: nextRoute.arguments,
-    );
+    Navigator.of(context).pushReplacementNamed(nextRoute);
   }
 
   @override
@@ -83,7 +65,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              'Starting up...',
+              YoutubeStrings.of(context).splashText,
               style: Theme.of(context).textTheme.headline5,
             ),
           ),

@@ -7,10 +7,14 @@ import 'loading_view.dart';
 class ResourceBuilder<T> extends StatefulWidget {
   final UiResource<T> resource;
   final Widget Function(BuildContext, T) builder;
+  final Widget Function(BuildContext)? loadingBuilder;
+  final Widget Function(BuildContext, dynamic)? errorBuilder;
 
   const ResourceBuilder({
     required this.resource,
     required this.builder,
+    this.loadingBuilder,
+    this.errorBuilder,
     super.key,
   });
 
@@ -19,6 +23,12 @@ class ResourceBuilder<T> extends StatefulWidget {
 }
 
 class _ResourceBuilderState<T> extends State<ResourceBuilder<T>> {
+  void _retry() {
+    setState(() {
+      widget.resource.retry();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<T>(
@@ -26,13 +36,14 @@ class _ResourceBuilderState<T> extends State<ResourceBuilder<T>> {
       future: widget.resource.future,
       builder: (context, snap) {
         if (snap.hasError) {
-          return ErrorView(
-            snap.error,
-            retry: () => setState(() => widget.resource.retry()),
-          );
+          return widget.errorBuilder?.call(context, snap.error) ??
+              ErrorView(snap.error, retry: _retry);
         }
-        if (snap.hasData) return widget.builder(context, snap.data as T);
-        return const LoadingView();
+        if (snap.hasData) {
+          return widget.builder(context, snap.data as T);
+        }
+
+        return widget.loadingBuilder?.call(context) ?? const LoadingView();
       },
     );
   }

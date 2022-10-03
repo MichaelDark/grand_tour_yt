@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 import '../di/locator.dart';
-import '../models/youtube/youtube_channel.dart';
+import '../l10n/youtube_strings.dart';
 import '../services/google_auth_service.dart';
 import '../utils/assets.gen.dart';
 import '../widgets/show_up.dart';
-import 'channel_page.dart';
 import 'channels_page.dart';
 
 class SignInPage extends StatefulWidget {
@@ -24,9 +23,6 @@ class _SignInPageState extends State<SignInPage> {
     if (!mounted) return;
     Navigator.of(context).pushReplacementNamed(
       ChannelsPage.routeName,
-      arguments: const ChannelPageArguments(
-        channelId: YoutubeChannel.grandTourChannelId,
-      ),
     );
   }
 
@@ -50,7 +46,7 @@ class _SignInPageState extends State<SignInPage> {
               child: ShowUp(
                 delay: const Duration(milliseconds: 1500),
                 child: Text(
-                  'We need your Google Account to access Youtube',
+                  YoutubeStrings.of(context).signInPageHint,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headline5,
                 ),
@@ -62,7 +58,7 @@ class _SignInPageState extends State<SignInPage> {
                 delay: const Duration(milliseconds: 2000),
                 child: ElevatedButton(
                   onPressed: _onSignIn,
-                  child: const Text('Sign In'),
+                  child: Text(YoutubeStrings.of(context).signInPageButtonLabel),
                 ),
               ),
             ),

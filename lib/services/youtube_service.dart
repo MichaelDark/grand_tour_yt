@@ -36,7 +36,7 @@ class YoutubeService {
   Future<YoutubeChannel> fetchChannel(String channelId) async {
     final api = await getApi();
     final response = await api.channels.list(
-      ['snippet', 'contentDetails', 'statistics', 'status'],
+      Parts.channels,
       id: [channelId],
       maxResults: 1,
     );
@@ -49,7 +49,7 @@ class YoutubeService {
   ) async {
     final api = await getApi();
     final response = await api.playlists.list(
-      ['contentDetails', 'id', 'localizations', 'player', 'snippet', 'status'],
+      Parts.playlists,
       channelId: channelId,
       pageToken: pageToken,
     );
@@ -62,10 +62,33 @@ class YoutubeService {
   ) async {
     final api = await getApi();
     final response = await api.playlistItems.list(
-      ['contentDetails', 'id', 'snippet', 'status'],
+      Parts.playlistItems,
       playlistId: id,
       pageToken: pageToken,
     );
     return _mapper.mapPlaylistItemResponse(response);
   }
+}
+
+abstract class Parts {
+  static const channels = [
+    'snippet',
+    'contentDetails',
+    'statistics',
+    'status',
+  ];
+  static const playlists = [
+    'contentDetails',
+    'id',
+    'localizations',
+    'player',
+    'snippet',
+    'status',
+  ];
+  static const playlistItems = [
+    'contentDetails',
+    'id',
+    'snippet',
+    'status',
+  ];
 }

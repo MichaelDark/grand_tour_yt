@@ -9,12 +9,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
+  flutter_localizations:
+    sdk: flutter
+
   # Core
   logger: ^1.1.0
   get_it: ^7.2.0
   injectable: ^1.5.3
-  
+  intl: ^0.17.0
+
   # Google API
   google_sign_in: ^5.4.2
   googleapis: ^9.2.0
@@ -26,6 +29,8 @@ dependencies:
   youtube_player_flutter: ^8.1.0
   google_fonts: ^3.0.1
   flutter_inset_box_shadow: ^1.0.8
+  timeago: ^3.3.0
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -36,6 +41,7 @@ dev_dependencies:
   flutter_gen_runner: ^5.0.1
 
 flutter:
+  generate: true
   uses-material-design: true
   assets:
     - assets/lottie/

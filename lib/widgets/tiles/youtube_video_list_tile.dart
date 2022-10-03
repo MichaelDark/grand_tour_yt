@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import '../../models/youtube/youtube_video.dart';
 import '../../pages/video_page.dart';
@@ -28,12 +29,29 @@ class YoutubeVideoListTile extends StatelessWidget {
             ),
           ),
         ),
+        if (video.publishedAt != null)
+          Positioned(
+            top: 8,
+            left: 8,
+            child: RawChip(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              label: Text(
+                timeago.format(
+                  video.publishedAt!,
+                  locale: Localizations.localeOf(context).toLanguageTag(),
+                ),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+              ),
+            ),
+          )
       ],
       onTap: () {
         Navigator.of(context).pushNamed(
           VideoPage.routeName,
           arguments: VideoPageArguments(
-            title: video.title,
+            onGenerateTitle: (context) => video.title,
             videoId: video.videoId,
           ),
         );

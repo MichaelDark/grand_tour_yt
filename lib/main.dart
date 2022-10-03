@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import 'di/locator.dart';
+import 'l10n/youtube_strings.dart';
 import 'pages/channel_page.dart';
 import 'pages/channels_page.dart';
 import 'pages/playlist_page.dart';
@@ -12,6 +14,9 @@ import 'pages/video_page.dart';
 
 void main() {
   configureDependencies();
+  timeago.setLocaleMessages('en', timeago.EnShortMessages());
+  timeago.setLocaleMessages('uk', timeago.UkShortMessages());
+  timeago.setDefaultLocale('en');
   runApp(const MyApp());
 }
 
@@ -21,9 +26,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Grand Tour YT Demo',
+      onGenerateTitle: (context) => YoutubeStrings.of(context).appName,
       debugShowCheckedModeBanner: false,
       theme: _buildTheme(),
+      localizationsDelegates: YoutubeStrings.localizationsDelegates,
+      supportedLocales: YoutubeStrings.supportedLocales,
       onGenerateRoute: (settings) {
         final Map<String, WidgetBuilder> routes = {
           SplashPage.routeName: (_) => const SplashPage(),
@@ -65,7 +72,7 @@ class MyApp extends StatelessWidget {
       colorScheme: baseTheme.colorScheme.copyWith(
         secondary: Colors.redAccent,
       ),
-      textTheme: GoogleFonts.abelTextTheme(baseTheme.textTheme),
+      textTheme: GoogleFonts.playTextTheme(baseTheme.textTheme),
     );
   }
 
@@ -78,7 +85,7 @@ class MyApp extends StatelessWidget {
     );
 
     app = Banner(
-      message: 'demo',
+      message: YoutubeStrings.of(context).demoLabel,
       location: BannerLocation.bottomEnd,
       child: app,
     );

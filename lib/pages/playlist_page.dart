@@ -8,10 +8,13 @@ import '../view_models/playlist_view_model.dart';
 import '../widgets/tiles/youtube_video_list_tile.dart';
 
 class PlaylistPageArguments {
-  final String title;
+  final String Function(BuildContext) onGenerateTitle;
   final String playlistId;
 
-  const PlaylistPageArguments({required this.title, required this.playlistId});
+  const PlaylistPageArguments({
+    required this.onGenerateTitle,
+    required this.playlistId,
+  });
 }
 
 class PlaylistPage extends StatefulWidget {
@@ -32,7 +35,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(args.title),
+          title: Text(args.onGenerateTitle(context)),
           automaticallyImplyLeading: true,
         ),
         body: SafeArea(

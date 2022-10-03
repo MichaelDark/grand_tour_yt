@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../../l10n/youtube_strings.dart';
 
 class ErrorView extends StatelessWidget {
   final dynamic error;
@@ -11,17 +14,32 @@ class ErrorView extends StatelessWidget {
     return SafeArea(
       child: Center(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(error.toString()),
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              child: Text(
+                YoutubeStrings.of(context).errorViewHint,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 16),
+              child: Text(
+                error.toString(),
+                textAlign: TextAlign.center,
+                maxLines: 4,
+                style: GoogleFonts.ubuntuMono(),
+              ),
             ),
             if (retry != null)
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 child: ElevatedButton(
                   onPressed: retry,
-                  child: const Text('Retry'),
+                  child: Text(YoutubeStrings.of(context).errorViewRetryLabel),
                 ),
               ),
           ],

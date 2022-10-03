@@ -64,6 +64,7 @@ class YoutubeMapper {
               thumbnail: YoutubeThumbnail(
                 imageUrl: element.snippet!.thumbnails!.maybeImageUrl,
               ),
+              publishedAt: element.contentDetails!.videoPublishedAt,
             ),
           )
           .toList(),
