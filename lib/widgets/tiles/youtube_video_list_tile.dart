@@ -33,7 +33,7 @@ class YoutubeVideoListTile extends StatelessWidget {
           VideoPage.routeName,
           arguments: VideoPageArguments(
             title: video.title,
-            videoId: video.id,
+            videoId: video.videoId,
           ),
         );
       },

@@ -7,8 +7,8 @@ import '../models/youtube/youtube_channel.dart';
 import '../models/youtube/youtube_playlist.dart';
 import '../utils/build_context_ext.dart';
 import '../view_models/channel_view_model.dart';
-import '../widgets/channel_description.dart';
 import '../widgets/channel_image.dart';
+import '../widgets/channel_info.dart';
 import '../widgets/resources/resource_builder.dart';
 import '../widgets/tiles/youtube_playlist_list_tile.dart';
 import 'playlist_page.dart';
@@ -67,9 +67,8 @@ class ChannelView extends StatelessWidget {
           ),
         ),
         SliverToBoxAdapter(
-          child: ChannelDescription(
-            title: channel.title,
-            description: channel.description,
+          child: ChannelInfo(
+            channel: channel,
           ),
         ),
         const SliverToBoxAdapter(child: Divider(height: 1)),

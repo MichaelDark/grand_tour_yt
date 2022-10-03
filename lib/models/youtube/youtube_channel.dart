@@ -7,6 +7,8 @@ class YoutubeChannel {
   final String title;
   final String description;
   final String uploadsPlaylistId;
+  final int? subscriberCount;
+  final int? videoCount;
   final YoutubeThumbnail thumbnail;
 
   const YoutubeChannel({
@@ -14,6 +16,8 @@ class YoutubeChannel {
     required this.title,
     required this.description,
     required this.uploadsPlaylistId,
+    required this.subscriberCount,
+    required this.videoCount,
     required this.thumbnail,
   });
 }

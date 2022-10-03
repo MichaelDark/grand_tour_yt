@@ -22,6 +22,8 @@ class YoutubeMapper {
       title: channel.snippet!.title!,
       description: channel.snippet!.description!,
       uploadsPlaylistId: channel.contentDetails!.relatedPlaylists!.uploads!,
+      subscriberCount: channel.statistics!.subscriberCount!.tryParse(),
+      videoCount: channel.statistics!.videoCount!.tryParse(),
       thumbnail: YoutubeThumbnail(
         imageUrl: channel.snippet!.thumbnails!.maybeImageUrl,
       ),
@@ -56,6 +58,7 @@ class YoutubeMapper {
           .map(
             (element) => YoutubeVideo(
               id: element.id!,
+              videoId: element.contentDetails!.videoId!,
               title: element.snippet!.title!,
               description: element.snippet!.description!,
               thumbnail: YoutubeThumbnail(
@@ -66,6 +69,14 @@ class YoutubeMapper {
           .toList(),
       nextPageToken: response.nextPageToken,
     );
+  }
+}
+
+extension on String? {
+  int? tryParse() {
+    final text = this;
+    if (text == null) return null;
+    return int.tryParse(text);
   }
 }
 

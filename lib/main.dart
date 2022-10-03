@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'di/locator.dart';
 import 'pages/channel_page.dart';
@@ -21,19 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Grand Tour YT Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        scaffoldBackgroundColor: Colors.red.shade50,
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ButtonStyle(
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0),
-              ),
-            ),
-          ),
-        ),
-      ),
+      theme: _buildTheme(),
       onGenerateRoute: (settings) {
         final Map<String, WidgetBuilder> routes = {
           SplashPage.routeName: (_) => const SplashPage(),
@@ -53,6 +42,26 @@ class MyApp extends StatelessWidget {
         throw 'Unknown route';
       },
       builder: _buildApp,
+    );
+  }
+
+  ThemeData _buildTheme() {
+    ThemeData baseTheme = ThemeData(
+      primarySwatch: Colors.red,
+      scaffoldBackgroundColor: Colors.red.shade50,
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    return baseTheme.copyWith(
+      textTheme: GoogleFonts.abelTextTheme(baseTheme.textTheme),
     );
   }
 
