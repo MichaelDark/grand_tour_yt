@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_string_interpolations
+
 import 'package:intl/intl.dart' as intl;
 
 import 'youtube_strings.dart';
@@ -28,7 +30,7 @@ class YoutubeStringsEn extends YoutubeStrings {
   String get signInPageButtonLabel => 'Sign In';
 
   @override
-  String get channelsPageTitle => 'My favourite YouTube channels';
+  String get channelsPageTitle => 'Favourite channels';
 
   @override
   String nSubscribers(num count, String countText) {
@@ -54,13 +56,24 @@ class YoutubeStringsEn extends YoutubeStrings {
 
   @override
   String nViews(num count) {
+    final intl.NumberFormat countNumberFormat = intl.NumberFormat.decimalPattern(localeName);
+    final String countString = countNumberFormat.format(count);
+
     return intl.Intl.pluralLogic(
       count,
       locale: localeName,
       zero: '0 views',
-      one: '$count view',
-      other: '$count views',
+      one: '$countString view',
+      other: '$countString views',
     );
+  }
+
+  @override
+  String numberWithDecimalPattern(int number) {
+    final intl.NumberFormat numberNumberFormat = intl.NumberFormat.decimalPattern(localeName);
+    final String numberString = numberNumberFormat.format(number);
+
+    return '$numberString';
   }
 
   @override
@@ -79,4 +92,16 @@ class YoutubeStringsEn extends YoutubeStrings {
 
   @override
   String get videoLicencedLabel => 'Licenced';
+
+  @override
+  String get settingsPageTitle => 'Settings';
+
+  @override
+  String get settingsPageThemeTitle => 'Theme';
+
+  @override
+  String get settingsPageThemeSubtitle => 'Tap to toggle dark and light theme';
+
+  @override
+  String get settingsPageLanguageSubtitle => 'Tap to change language';
 }

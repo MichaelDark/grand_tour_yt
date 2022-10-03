@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_string_interpolations
+
 import 'package:intl/intl.dart' as intl;
 
 import 'youtube_strings.dart';
@@ -28,7 +30,7 @@ class YoutubeStringsUk extends YoutubeStrings {
   String get signInPageButtonLabel => 'Увійти';
 
   @override
-  String get channelsPageTitle => 'Мої улюблені YouTube канали';
+  String get channelsPageTitle => 'Улюблені канали';
 
   @override
   String nSubscribers(num count, String countText) {
@@ -52,13 +54,24 @@ class YoutubeStringsUk extends YoutubeStrings {
 
   @override
   String nViews(num count) {
+    final intl.NumberFormat countNumberFormat = intl.NumberFormat.decimalPattern(localeName);
+    final String countString = countNumberFormat.format(count);
+
     return intl.Intl.pluralLogic(
       count,
       locale: localeName,
       zero: '0 переглядів',
-      one: '$count перегляд',
-      other: '$count переглядів',
+      one: '$countString перегляд',
+      other: '$countString переглядів',
     );
+  }
+
+  @override
+  String numberWithDecimalPattern(int number) {
+    final intl.NumberFormat numberNumberFormat = intl.NumberFormat.decimalPattern(localeName);
+    final String numberString = numberNumberFormat.format(number);
+
+    return '$numberString';
   }
 
   @override
@@ -77,4 +90,16 @@ class YoutubeStringsUk extends YoutubeStrings {
 
   @override
   String get videoLicencedLabel => 'Ліцензоване';
+
+  @override
+  String get settingsPageTitle => 'Налаштування';
+
+  @override
+  String get settingsPageThemeTitle => 'Тема';
+
+  @override
+  String get settingsPageThemeSubtitle => 'Натисніть аби перемкнути тему';
+
+  @override
+  String get settingsPageLanguageSubtitle => 'Натисніть аби змінити мову застосунку';
 }

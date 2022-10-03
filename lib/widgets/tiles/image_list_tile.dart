@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 
 class ImageListTile extends StatelessWidget {
   static Color getBackgroundColor(BuildContext context) {
-    return Theme.of(context).shadowColor;
+    return Theme.of(context).colorScheme.primary.withOpacity(0.75);
+  }
+
+  static Color getForegroundColor(BuildContext context) {
+    return Theme.of(context).colorScheme.onPrimary;
   }
 
   final String title;
@@ -30,9 +34,9 @@ class ImageListTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Theme.of(context).shadowColor,
+                color: Theme.of(context).shadowColor.withOpacity(0.5),
                 blurRadius: 10,
-                spreadRadius: 0,
+                spreadRadius: 5,
               ),
             ],
           ),
@@ -57,7 +61,9 @@ class ImageListTile extends StatelessWidget {
                       color: ImageListTile.getBackgroundColor(context),
                       child: Text(
                         title,
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
                       ),
                     ),
                   ),

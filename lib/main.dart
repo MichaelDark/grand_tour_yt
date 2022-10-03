@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -9,9 +10,11 @@ import 'l10n/youtube_strings.dart';
 import 'pages/channel_page.dart';
 import 'pages/channels_page.dart';
 import 'pages/playlist_page.dart';
+import 'pages/settings_page.dart';
 import 'pages/sign_in_page.dart';
 import 'pages/splash_page.dart';
 import 'pages/video_page.dart';
+import 'services/settings_service.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,38 +38,64 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      onGenerateTitle: (context) => YoutubeStrings.of(context).appName,
-      debugShowCheckedModeBanner: false,
-      theme: _buildTheme(),
-      localizationsDelegates: YoutubeStrings.localizationsDelegates,
-      supportedLocales: YoutubeStrings.supportedLocales,
-      onGenerateRoute: (settings) {
-        final Map<String, WidgetBuilder> routes = {
-          SplashPage.routeName: (_) => const SplashPage(),
-          SignInPage.routeName: (_) => const SignInPage(),
-          ChannelsPage.routeName: (_) => const ChannelsPage(),
-          ChannelPage.routeName: (_) => const ChannelPage(),
-          PlaylistPage.routeName: (_) => const PlaylistPage(),
-          VideoPage.routeName: (_) => const VideoPage(),
-        };
+    final settingsService = locator<SettingsService>();
 
-        final builder = routes[settings.name];
+    return AnimatedBuilder(
+      animation: settingsService,
+      builder: (context, _) {
+        return MaterialApp(
+          onGenerateTitle: (context) => YoutubeStrings.of(context).appName,
+          debugShowCheckedModeBanner: false,
+          theme: _buildTheme(settingsService.brightness),
+          localizationsDelegates: const [
+            ...YoutubeStrings.localizationsDelegates,
+            LocaleNamesLocalizationsDelegate(),
+          ],
+          supportedLocales: YoutubeStrings.supportedLocales,
+          locale: settingsService.locale,
+          onGenerateRoute: (settings) {
+            final Map<String, WidgetBuilder> routes = {
+              SplashPage.routeName: (_) => const SplashPage(),
+              SignInPage.routeName: (_) => const SignInPage(),
+              ChannelsPage.routeName: (_) => const ChannelsPage(),
+              ChannelPage.routeName: (_) => const ChannelPage(),
+              PlaylistPage.routeName: (_) => const PlaylistPage(),
+              VideoPage.routeName: (_) => const VideoPage(),
+              SettingsPage.routeName: (_) => const SettingsPage(),
+            };
 
-        if (builder != null) {
-          return CupertinoPageRoute(builder: builder, settings: settings);
-        }
+            final builder = routes[settings.name];
 
-        // return MaterialPageRoute(builder: (_) => UnknownPage());
-        throw 'Unknown route';
+            if (builder != null) {
+              return CupertinoPageRoute(builder: builder, settings: settings);
+            }
+
+            // return MaterialPageRoute(builder: (_) => UnknownPage());
+            throw 'Unknown route';
+          },
+          builder: _buildApp,
+        );
       },
-      builder: _buildApp,
     );
   }
 
-  ThemeData _buildTheme() {
-    // ThemeData baseTheme = ThemeData.light().copyWith(
-    ThemeData baseTheme = ThemeData.dark().copyWith(
+  ThemeData _buildTheme(Brightness brigtness) {
+    ThemeData baseTheme;
+
+    switch (brigtness) {
+      case Brightness.dark:
+        baseTheme = ThemeData.dark();
+        break;
+      case Brightness.light:
+        baseTheme = ThemeData.light();
+        break;
+    }
+
+    return baseTheme.copyWith(
+      colorScheme: baseTheme.colorScheme.copyWith(
+        secondary: Colors.redAccent,
+      ),
+      textTheme: GoogleFonts.playTextTheme(baseTheme.textTheme),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
           shape: MaterialStateProperty.all(
@@ -76,13 +105,6 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-    );
-
-    return baseTheme.copyWith(
-      colorScheme: baseTheme.colorScheme.copyWith(
-        secondary: Colors.redAccent,
-      ),
-      textTheme: GoogleFonts.playTextTheme(baseTheme.textTheme),
     );
   }
 

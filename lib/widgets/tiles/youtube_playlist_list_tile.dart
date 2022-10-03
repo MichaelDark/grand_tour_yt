@@ -20,11 +20,10 @@ class YoutubePlaylistListTile extends StatelessWidget {
           top: 8,
           right: 8,
           child: CircleAvatar(
-            backgroundColor:
-                ImageListTile.getBackgroundColor(context).withOpacity(0.9),
+            backgroundColor: ImageListTile.getBackgroundColor(context),
             child: Icon(
               Icons.playlist_play_rounded,
-              color: Theme.of(context).colorScheme.primary,
+              color: ImageListTile.getForegroundColor(context),
             ),
           ),
         ),

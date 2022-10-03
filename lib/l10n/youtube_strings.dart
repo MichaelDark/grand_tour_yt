@@ -1,3 +1,4 @@
+// ignore_for_file: unnecessary_string_interpolations
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -138,7 +139,7 @@ abstract class YoutubeStrings {
   /// No description provided for @channelsPageTitle.
   ///
   /// In en, this message translates to:
-  /// **'My favourite YouTube channels'**
+  /// **'Favourite channels'**
   String get channelsPageTitle;
 
   /// No description provided for @nSubscribers.
@@ -158,6 +159,12 @@ abstract class YoutubeStrings {
   /// In en, this message translates to:
   /// **'{count,plural, =0{0 views} =1{{count} view} other{{count} views}}'**
   String nViews(num count);
+
+  /// No description provided for @numberWithDecimalPattern.
+  ///
+  /// In en, this message translates to:
+  /// **'{number}'**
+  String numberWithDecimalPattern(int number);
 
   /// No description provided for @videoDate.
   ///
@@ -182,6 +189,30 @@ abstract class YoutubeStrings {
   /// In en, this message translates to:
   /// **'Licenced'**
   String get videoLicencedLabel;
+
+  /// No description provided for @settingsPageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsPageTitle;
+
+  /// No description provided for @settingsPageThemeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get settingsPageThemeTitle;
+
+  /// No description provided for @settingsPageThemeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to toggle dark and light theme'**
+  String get settingsPageThemeSubtitle;
+
+  /// No description provided for @settingsPageLanguageSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to change language'**
+  String get settingsPageLanguageSubtitle;
 }
 
 class _YoutubeStringsDelegate extends LocalizationsDelegate<YoutubeStrings> {

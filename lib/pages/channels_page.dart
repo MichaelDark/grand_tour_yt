@@ -8,11 +8,16 @@ import '../widgets/resources/resource_builder.dart';
 import '../widgets/tiles/image_list_tile_error.dart';
 import '../widgets/tiles/image_list_tile_shimmer.dart';
 import '../widgets/tiles/youtube_channel_list_tile.dart';
+import 'settings_page.dart';
 
 class ChannelsPage extends StatelessWidget {
   static const routeName = '/channels';
 
   const ChannelsPage({Key? key}) : super(key: key);
+
+  void _navigateToSettings(BuildContext context) {
+    Navigator.of(context).pushNamed(SettingsPage.routeName);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +30,12 @@ class ChannelsPage extends StatelessWidget {
             SliverAppBar(
               leading: const Icon(Icons.favorite_rounded),
               title: Text(YoutubeStrings.of(context).channelsPageTitle),
+              actions: [
+                IconButton(
+                  onPressed: () => _navigateToSettings(context),
+                  icon: const Icon(Icons.settings_rounded),
+                ),
+              ],
               pinned: true,
             ),
             SliverPadding(

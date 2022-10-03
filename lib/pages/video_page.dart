@@ -188,11 +188,15 @@ class VideoDetailsView extends StatelessWidget {
               children: [
                 IconedLabel(
                   icon: const Icon(Icons.thumb_up_alt_rounded),
-                  label: '${video.likeCount}',
+                  label: YoutubeStrings.of(context).numberWithDecimalPattern(
+                    video.likeCount,
+                  ),
                 ),
                 IconedLabel(
                   icon: const Icon(Icons.comment_rounded),
-                  label: '${video.commentCount}',
+                  label: YoutubeStrings.of(context).numberWithDecimalPattern(
+                    video.commentCount,
+                  ),
                 ),
                 if (video.licensedContent) ...[
                   IconedLabel(

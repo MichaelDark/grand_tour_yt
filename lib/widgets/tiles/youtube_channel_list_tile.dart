@@ -23,14 +23,14 @@ class YoutubeChannelListTile extends StatelessWidget {
             top: 8,
             left: 8,
             child: RawChip(
-              backgroundColor: Theme.of(context).colorScheme.primary,
+              backgroundColor: ImageListTile.getBackgroundColor(context),
               label: Text(
                 YoutubeStrings.of(context).nSubscribers(
                   channel.subscriberCount!,
                   channel.subscriberCount!.formatCount(),
                 ),
                 style: TextStyle(
-                  color: Theme.of(context).colorScheme.onPrimary,
+                  color: ImageListTile.getForegroundColor(context),
                 ),
               ),
             ),

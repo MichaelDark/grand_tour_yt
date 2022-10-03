@@ -21,11 +21,10 @@ class YoutubePlaylistItemListTile extends StatelessWidget {
           top: 8,
           right: 8,
           child: CircleAvatar(
-            backgroundColor:
-                ImageListTile.getBackgroundColor(context).withOpacity(0.9),
+            backgroundColor: ImageListTile.getBackgroundColor(context),
             child: Icon(
               Icons.videocam_rounded,
-              color: Theme.of(context).colorScheme.primary,
+              color: ImageListTile.getForegroundColor(context),
             ),
           ),
         ),
@@ -34,14 +33,14 @@ class YoutubePlaylistItemListTile extends StatelessWidget {
             top: 8,
             left: 8,
             child: RawChip(
-              backgroundColor: Theme.of(context).colorScheme.primary,
+              backgroundColor: ImageListTile.getBackgroundColor(context),
               label: Text(
                 timeago.format(
                   playlistItem.publishedAt!,
                   locale: Localizations.localeOf(context).toLanguageTag(),
                 ),
                 style: TextStyle(
-                  color: Theme.of(context).colorScheme.onPrimary,
+                  color: ImageListTile.getForegroundColor(context),
                 ),
               ),
             ),

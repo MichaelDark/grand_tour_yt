@@ -6,7 +6,7 @@
     "splashText": "Starting up...",
     "signInPageHint": "We need your Google Account to access Youtube",
     "signInPageButtonLabel": "Sign In",
-    "channelsPageTitle": "My favourite YouTube channels",
+    "channelsPageTitle": "Favourite channels",
     "nSubscribers": "{count,plural, =0{0 subscribers} =1{{countText} subscriber} other{{countText} subscribers}}",
     "@nSubscribers": {
         "placeholders": {
@@ -31,7 +31,17 @@
     "@nViews": {
         "placeholders": {
             "count": {
-                "type": "int"
+                "type": "int",
+                "format": "decimalPattern"
+            }
+        }
+    },
+    "numberWithDecimalPattern": "{number}",
+    "@numberWithDecimalPattern": {
+        "placeholders": {
+            "number": {
+                "type": "int",
+                "format": "decimalPattern"
             }
         }
     },
@@ -49,5 +59,9 @@
     },
     "uploadedVideosCaption": "Uploaded videos",
     "playlistsCaption": "Playlists",
-    "videoLicencedLabel": "Licenced"
+    "videoLicencedLabel": "Licenced",
+    "settingsPageTitle": "Settings",
+    "settingsPageThemeTitle": "Theme",
+    "settingsPageThemeSubtitle": "Tap to toggle dark and light theme",
+    "settingsPageLanguageSubtitle": "Tap to change language"
 }
