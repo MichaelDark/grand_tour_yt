@@ -145,8 +145,8 @@ abstract class YoutubeStrings {
   /// No description provided for @nSubscribers.
   ///
   /// In en, this message translates to:
-  /// **'{count,plural, =0{0 subscribers} =1{{countText} subscriber} other{{countText} subscribers}}'**
-  String nSubscribers(num count, String countText);
+  /// **'{count,plural, =0{0 subscribers} =1{{count} subscriber} other{{count} subscribers}}'**
+  String nSubscribers(num count);
 
   /// No description provided for @nVideos.
   ///
@@ -213,6 +213,54 @@ abstract class YoutubeStrings {
   /// In en, this message translates to:
   /// **'Tap to change language'**
   String get settingsPageLanguageSubtitle;
+
+  /// No description provided for @settingsPageClearSearchHistoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Search History'**
+  String get settingsPageClearSearchHistoryTitle;
+
+  /// No description provided for @settingsPageClearSearchHistorySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to clear search history across for videos across all channels'**
+  String get settingsPageClearSearchHistorySubtitle;
+
+  /// No description provided for @searchErrorEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter search query in the field above'**
+  String get searchErrorEmpty;
+
+  /// No description provided for @searchErrorMoreThenTwoSymbols.
+  ///
+  /// In en, this message translates to:
+  /// **'Search term must be longer than two letters'**
+  String get searchErrorMoreThenTwoSymbols;
+
+  /// No description provided for @clearSearchHistoryDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Search History'**
+  String get clearSearchHistoryDialogTitle;
+
+  /// No description provided for @clearSearchHistoryDialogPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to clear search history?\n\nThis action cannot be undone.'**
+  String get clearSearchHistoryDialogPrompt;
+
+  /// No description provided for @clearSearchHistoryDialogPositiveButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear history'**
+  String get clearSearchHistoryDialogPositiveButton;
+
+  /// No description provided for @clearSearchHistoryDialogNegativeButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get clearSearchHistoryDialogNegativeButton;
 }
 
 class _YoutubeStringsDelegate extends LocalizationsDelegate<YoutubeStrings> {

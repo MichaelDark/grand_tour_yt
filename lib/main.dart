@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'di/locator.dart';
@@ -16,10 +17,11 @@ import 'pages/splash_page.dart';
 import 'pages/video_page.dart';
 import 'services/settings_service.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  configureDependencies();
+  await Hive.initFlutter();
+  await configureDependencies();
 
   timeago.setLocaleMessages('en', timeago.EnMessages());
   timeago.setLocaleMessages('uk', timeago.UkMessages());

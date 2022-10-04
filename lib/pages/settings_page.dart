@@ -4,12 +4,54 @@ import 'package:recase/recase.dart';
 
 import '../di/locator.dart';
 import '../l10n/youtube_strings.dart';
+import '../services/search_query_service.dart';
 import '../services/settings_service.dart';
 
 class SettingsPage extends StatelessWidget {
   static const routeName = '/settings';
 
   const SettingsPage({Key? key}) : super(key: key);
+
+  void _onClearSearchHistory(BuildContext context) async {
+    final result = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            YoutubeStrings.of(context).clearSearchHistoryDialogTitle,
+          ),
+          content: Text(
+            YoutubeStrings.of(context).clearSearchHistoryDialogPrompt,
+          ),
+          actions: [
+            TextButton(
+              child: Text(
+                YoutubeStrings.of(context)
+                    .clearSearchHistoryDialogPositiveButton,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+            TextButton(
+              child: Text(
+                YoutubeStrings.of(context)
+                    .clearSearchHistoryDialogNegativeButton,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    if (result == true) {
+      final searchQueryService = locator<SearchQueryService>();
+      await searchQueryService.clearCachedQueries();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +68,12 @@ class SettingsPage extends StatelessWidget {
             SliverToBoxAdapter(
               child: ListTile(
                 leading: const Icon(Icons.palette_rounded),
-                title: Text(YoutubeStrings.of(context).settingsPageThemeTitle),
-                subtitle:
-                    Text(YoutubeStrings.of(context).settingsPageThemeSubtitle),
+                title: Text(
+                  YoutubeStrings.of(context).settingsPageThemeTitle,
+                ),
+                subtitle: Text(
+                  YoutubeStrings.of(context).settingsPageThemeSubtitle,
+                ),
                 isThreeLine: true,
                 onTap: () => settingsService.toggleBrightness(),
               ),
@@ -37,9 +82,12 @@ class SettingsPage extends StatelessWidget {
               child: PopupMenuButton<Locale>(
                 child: ListTile(
                   leading: const Icon(Icons.language_rounded),
-                  title: Text(settingsService.locale.getDisplayName(context)),
+                  title: Text(
+                    settingsService.locale.getDisplayName(context),
+                  ),
                   subtitle: Text(
-                      YoutubeStrings.of(context).settingsPageLanguageSubtitle),
+                    YoutubeStrings.of(context).settingsPageLanguageSubtitle,
+                  ),
                   isThreeLine: true,
                 ),
                 onSelected: (Locale? pickedLocale) {
@@ -60,6 +108,21 @@ class SettingsPage extends StatelessWidget {
                     ),
                   ];
                 },
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: ListTile(
+                leading: const Icon(Icons.auto_delete_rounded),
+                title: Text(
+                  YoutubeStrings.of(context)
+                      .settingsPageClearSearchHistoryTitle,
+                ),
+                subtitle: Text(
+                  YoutubeStrings.of(context)
+                      .settingsPageClearSearchHistorySubtitle,
+                ),
+                isThreeLine: true,
+                onTap: () => _onClearSearchHistory(context),
               ),
             ),
           ],

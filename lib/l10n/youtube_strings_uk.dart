@@ -33,22 +33,31 @@ class YoutubeStringsUk extends YoutubeStrings {
   String get channelsPageTitle => 'Улюблені канали';
 
   @override
-  String nSubscribers(num count, String countText) {
+  String nSubscribers(num count) {
+    final intl.NumberFormat countNumberFormat = intl.NumberFormat.compactCurrency(
+      locale: localeName,
+      symbol: ''
+    );
+    final String countString = countNumberFormat.format(count);
+
     return intl.Intl.pluralLogic(
       count,
       locale: localeName,
       zero: '0 підписників',
-      one: '$countText підписник',
-      other: '$countText підписників',
+      one: '$countString підписник',
+      other: '$countString підписників',
     );
   }
 
   @override
   String nVideos(num count) {
+    final intl.NumberFormat countNumberFormat = intl.NumberFormat.decimalPattern(localeName);
+    final String countString = countNumberFormat.format(count);
+
     return intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count відео',
+      other: '$countString відео',
     );
   }
 
@@ -102,4 +111,28 @@ class YoutubeStringsUk extends YoutubeStrings {
 
   @override
   String get settingsPageLanguageSubtitle => 'Натисніть аби змінити мову застосунку';
+
+  @override
+  String get settingsPageClearSearchHistoryTitle => 'Видалити історію пошуку';
+
+  @override
+  String get settingsPageClearSearchHistorySubtitle => 'Натисніть аби видалити історію пошуку відео по каналах';
+
+  @override
+  String get searchErrorEmpty => 'Введіть пошуковий запит у поле вище';
+
+  @override
+  String get searchErrorMoreThenTwoSymbols => 'Пошуковий запит повинен бути довший за два символи';
+
+  @override
+  String get clearSearchHistoryDialogTitle => 'Видалення історії пошуку';
+
+  @override
+  String get clearSearchHistoryDialogPrompt => 'Вви впевнені, що ви хочете видалити історію пошуку?\n\nЦя дія не може бути скасована.';
+
+  @override
+  String get clearSearchHistoryDialogPositiveButton => 'Видалити історію';
+
+  @override
+  String get clearSearchHistoryDialogNegativeButton => 'Відмінити';
 }

@@ -7,15 +7,15 @@
     "signInPageHint": "Нам потрібен ваш Google акаунт для доступу до Youtube",
     "signInPageButtonLabel": "Увійти",
     "channelsPageTitle": "Улюблені канали",
-    "nSubscribers": "{count,plural, =0{0 підписників} =1{{countText} підписник} other{{countText} підписників}}",
+    "nSubscribers": "{count,plural, =0{0 підписників} =1{{count} підписник} other{{count} підписників}}",
     "@nSubscribers": {
         "placeholders": {
             "count": {
-                "type": "int"
-            },
-            "countText": {
-                "type": "String",
-                "example": "1.2B"
+                "type": "int",
+                "format": "compactCurrency",
+                "optionalParameters": {
+                    "symbol": ""
+                }
             }
         }
     },
@@ -23,7 +23,8 @@
     "@nVideos": {
         "placeholders": {
             "count": {
-                "type": "int"
+                "type": "int",
+                "format": "decimalPattern"
             }
         }
     },
@@ -63,5 +64,13 @@
     "settingsPageTitle": "Налаштування",
     "settingsPageThemeTitle": "Тема",
     "settingsPageThemeSubtitle": "Натисніть аби перемкнути тему",
-    "settingsPageLanguageSubtitle": "Натисніть аби змінити мову застосунку"
+    "settingsPageLanguageSubtitle": "Натисніть аби змінити мову застосунку",
+    "settingsPageClearSearchHistoryTitle": "Видалити історію пошуку",
+    "settingsPageClearSearchHistorySubtitle": "Натисніть аби видалити історію пошуку відео по каналах",
+    "searchErrorEmpty": "Введіть пошуковий запит у поле вище",
+    "searchErrorMoreThenTwoSymbols": "Пошуковий запит повинен бути довший за два символи",
+    "clearSearchHistoryDialogTitle": "Видалення історії пошуку",
+    "clearSearchHistoryDialogPrompt": "Вви впевнені, що ви хочете видалити історію пошуку?\n\nЦя дія не може бути скасована.",
+    "clearSearchHistoryDialogPositiveButton": "Видалити історію",
+    "clearSearchHistoryDialogNegativeButton": "Відмінити"
 }

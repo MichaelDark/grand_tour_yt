@@ -78,6 +78,22 @@ class YoutubeService {
     );
     return _mapper.mapVideo(response);
   }
+
+  Future<YoutubeResponse<YoutubePlaylistItem>> searchVideos(
+    String channelId,
+    String query,
+    String? pageToken,
+  ) async {
+    final api = await getApi();
+    final response = await api.search.list(
+      Parts.search,
+      channelId: channelId,
+      q: query,
+      type: ['video'],
+      pageToken: pageToken,
+    );
+    return _mapper.mapSearchListResponse(response);
+  }
 }
 
 abstract class Parts {
@@ -124,5 +140,10 @@ abstract class Parts {
     // 'fileDetails',
     // 'processingDetails',
     // 'suggestions',
+  ];
+
+  static const search = [
+    'id',
+    'snippet',
   ];
 }

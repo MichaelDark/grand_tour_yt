@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../l10n/youtube_strings.dart';
 import '../../models/youtube/youtube_channel.dart';
 import '../../pages/channel_page.dart';
-import '../../utils/int_ext.dart';
 import '../../utils/youtube_thumbnail_ext.dart';
 import 'image_list_tile.dart';
 
@@ -27,7 +26,6 @@ class YoutubeChannelListTile extends StatelessWidget {
               label: Text(
                 YoutubeStrings.of(context).nSubscribers(
                   channel.subscriberCount!,
-                  channel.subscriberCount!.formatCount(),
                 ),
                 style: TextStyle(
                   color: ImageListTile.getForegroundColor(context),

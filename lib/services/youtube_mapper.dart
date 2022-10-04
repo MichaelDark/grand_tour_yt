@@ -3,6 +3,7 @@ import 'package:googleapis/youtube/v3.dart'
         ChannelListResponse,
         PlaylistItemListResponse,
         PlaylistListResponse,
+        SearchListResponse,
         ThumbnailDetails,
         VideoListResponse;
 import 'package:injectable/injectable.dart';
@@ -91,6 +92,28 @@ class YoutubeMapper {
       commentCount: int.parse(video.statistics!.commentCount!),
       likeCount: int.parse(video.statistics!.likeCount!),
       viewCount: int.parse(video.statistics!.viewCount!),
+    );
+  }
+
+  YoutubeResponse<YoutubePlaylistItem> mapSearchListResponse(
+    SearchListResponse response,
+  ) {
+    return YoutubeResponse(
+      items: response.items!
+          .map(
+            (playlistItem) => YoutubePlaylistItem(
+              id: playlistItem.id!.videoId!,
+              videoId: playlistItem.id!.videoId!,
+              title: playlistItem.snippet!.title!,
+              description: playlistItem.snippet!.description!,
+              thumbnail: YoutubeThumbnail(
+                imageUrl: playlistItem.snippet!.thumbnails!.maybeImageUrl,
+              ),
+              publishedAt: playlistItem.snippet!.publishedAt,
+            ),
+          )
+          .toList(),
+      nextPageToken: response.nextPageToken,
     );
   }
 }

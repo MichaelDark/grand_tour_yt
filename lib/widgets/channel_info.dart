@@ -4,8 +4,8 @@ import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart'
 
 import '../l10n/youtube_strings.dart';
 import '../models/youtube/youtube_channel.dart';
-import '../utils/int_ext.dart';
 import '../utils/youtube_thumbnail_ext.dart';
+import 'youtube_search_delegate.dart';
 
 class ChannelInfo extends StatelessWidget {
   final YoutubeChannel channel;
@@ -13,6 +13,13 @@ class ChannelInfo extends StatelessWidget {
   ChannelInfo({
     required this.channel,
   }) : super(key: ValueKey(channel));
+
+  void _navigateToSearch(BuildContext context) {
+    showSearch(
+      context: context,
+      delegate: YoutubeSearchDelegate(channel.id),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +47,42 @@ class ChannelInfo extends StatelessWidget {
                 Center(
                   child: Padding(
                     padding: EdgeInsets.only(top: imageHeight - 24),
-                    child: ChannelName(
-                      constraints: BoxConstraints(maxWidth: imageWidth * 0.75),
-                      title: channel.title,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ChannelName(
+                          constraints:
+                              BoxConstraints(maxWidth: imageWidth * 0.75),
+                          title: channel.title,
+                        ),
+                        const SizedBox(height: 8),
+                        Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                YoutubeStrings.of(context)
+                                    .nSubscribers(channel.subscriberCount!),
+                                style: Theme.of(context).textTheme.caption,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 4),
+                                child: Text(
+                                  ' • ',
+                                  style: Theme.of(context).textTheme.caption,
+                                ),
+                              ),
+                              Text(
+                                YoutubeStrings.of(context)
+                                    .nVideos(channel.videoCount!),
+                                style: Theme.of(context).textTheme.caption,
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 ),
@@ -50,7 +90,14 @@ class ChannelInfo extends StatelessWidget {
                   top: 0,
                   left: 0,
                   right: 0,
-                  child: ShadowedAppBar(actions: _buildChips(context)),
+                  child: ShadowedAppBar(
+                    actions: [
+                      IconButton(
+                        onPressed: () => _navigateToSearch(context),
+                        icon: const Icon(Icons.search_rounded),
+                      )
+                    ],
+                  ),
                 ),
               ],
             );
@@ -65,33 +112,6 @@ class ChannelInfo extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  List<Widget> _buildChips(BuildContext context) {
-    return [
-      if (channel.subscriberCount != null) ...[
-        YoutubeStrings.of(context).nSubscribers(
-          channel.subscriberCount!,
-          channel.subscriberCount!.formatCount(),
-        ),
-      ],
-      if (channel.videoCount != null) ...[
-        YoutubeStrings.of(context).nVideos(channel.videoCount!),
-      ],
-    ]
-        .map(
-          (label) => RawChip(
-            elevation: 8,
-            backgroundColor: Theme.of(context).colorScheme.primary,
-            label: Text(
-              label,
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
-            ),
-          ),
-        )
-        .toList();
   }
 }
 
@@ -143,7 +163,9 @@ class ChannelName extends StatelessWidget {
         constraints: constraints,
         child: Text(
           title,
-          style: Theme.of(context).textTheme.headline5,
+          style: Theme.of(context).textTheme.headline5!.copyWith(
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
         ),
       ),
     );
@@ -175,13 +197,10 @@ class ShadowedAppBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           leading,
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Wrap(
-              spacing: 8,
-              runSpacing: -8,
-              children: actions,
-            ),
+          Wrap(
+            spacing: 8,
+            runSpacing: -8,
+            children: actions,
           ),
         ],
       ),

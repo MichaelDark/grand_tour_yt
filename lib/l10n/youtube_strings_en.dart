@@ -33,24 +33,33 @@ class YoutubeStringsEn extends YoutubeStrings {
   String get channelsPageTitle => 'Favourite channels';
 
   @override
-  String nSubscribers(num count, String countText) {
+  String nSubscribers(num count) {
+    final intl.NumberFormat countNumberFormat = intl.NumberFormat.compactCurrency(
+      locale: localeName,
+      symbol: ''
+    );
+    final String countString = countNumberFormat.format(count);
+
     return intl.Intl.pluralLogic(
       count,
       locale: localeName,
       zero: '0 subscribers',
-      one: '$countText subscriber',
-      other: '$countText subscribers',
+      one: '$countString subscriber',
+      other: '$countString subscribers',
     );
   }
 
   @override
   String nVideos(num count) {
+    final intl.NumberFormat countNumberFormat = intl.NumberFormat.decimalPattern(localeName);
+    final String countString = countNumberFormat.format(count);
+
     return intl.Intl.pluralLogic(
       count,
       locale: localeName,
       zero: '0 videos',
-      one: '$count video',
-      other: '$count videos',
+      one: '$countString video',
+      other: '$countString videos',
     );
   }
 
@@ -104,4 +113,28 @@ class YoutubeStringsEn extends YoutubeStrings {
 
   @override
   String get settingsPageLanguageSubtitle => 'Tap to change language';
+
+  @override
+  String get settingsPageClearSearchHistoryTitle => 'Clear Search History';
+
+  @override
+  String get settingsPageClearSearchHistorySubtitle => 'Tap to clear search history across for videos across all channels';
+
+  @override
+  String get searchErrorEmpty => 'Enter search query in the field above';
+
+  @override
+  String get searchErrorMoreThenTwoSymbols => 'Search term must be longer than two letters';
+
+  @override
+  String get clearSearchHistoryDialogTitle => 'Clear Search History';
+
+  @override
+  String get clearSearchHistoryDialogPrompt => 'Are you sure you want to clear search history?\n\nThis action cannot be undone.';
+
+  @override
+  String get clearSearchHistoryDialogPositiveButton => 'Clear history';
+
+  @override
+  String get clearSearchHistoryDialogNegativeButton => 'Cancel';
 }
