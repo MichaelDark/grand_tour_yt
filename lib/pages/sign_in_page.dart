@@ -31,38 +31,41 @@ class _SignInPageState extends State<SignInPage> {
     return SafeArea(
       child: Scaffold(
         key: UniqueKey(),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            LottieBuilder.asset(
-              Assets.lottie.login,
-              height: 400,
-              width: 400,
-              repeat: false,
-              animate: true,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ShowUp(
-                delay: const Duration(milliseconds: 1500),
-                child: Text(
-                  YoutubeStrings.of(context).signInPageHint,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline5,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              LottieBuilder.asset(
+                Assets.lottie.login,
+                height: 400,
+                width: 400,
+                repeat: false,
+                animate: true,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ShowUp(
+                  delay: const Duration(milliseconds: 1500),
+                  child: Text(
+                    YoutubeStrings.of(context).signInPageHint,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ShowUp(
-                delay: const Duration(milliseconds: 2000),
-                child: ElevatedButton(
-                  onPressed: _onSignIn,
-                  child: Text(YoutubeStrings.of(context).signInPageButtonLabel),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ShowUp(
+                  delay: const Duration(milliseconds: 2000),
+                  child: ElevatedButton(
+                    onPressed: _onSignIn,
+                    child:
+                        Text(YoutubeStrings.of(context).signInPageButtonLabel),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

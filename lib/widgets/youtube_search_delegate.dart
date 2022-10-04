@@ -6,7 +6,7 @@ import '../di/locator.dart';
 import '../l10n/youtube_strings.dart';
 import '../models/youtube/youtube_playlist_item.dart';
 import '../services/search_query_repository.dart';
-import '../view_models/video_search_view_model.dart';
+import '../view_models/view_model_factory.dart';
 import 'tiles/image_list_tile_shimmer.dart';
 import 'tiles/youtube_playlist_item_list_tile.dart';
 
@@ -56,8 +56,8 @@ class YoutubeSearchDelegate extends SearchDelegate {
     final searchQueryService = locator<SearchQueryRepository>();
     searchQueryService.saveQuery(query);
 
-    final viewModelFactory = locator<VideoSearchViewModelFactory>();
-    final viewModel = viewModelFactory.get(channelId, query);
+    final viewModelFactory = locator<ViewModelFactory>();
+    final viewModel = viewModelFactory.videoSearch(channelId, query);
 
     return CustomScrollView(
       slivers: [

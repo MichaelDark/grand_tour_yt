@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../di/locator.dart';
 import '../l10n/youtube_strings.dart';
 import '../models/youtube/youtube_channel.dart';
-import '../view_models/channel_view_model.dart';
+import '../view_models/view_model_factory.dart';
 import '../widgets/resources/resource_builder.dart';
 import '../widgets/tiles/image_list_tile_error.dart';
 import '../widgets/tiles/image_list_tile_shimmer.dart';
@@ -21,7 +21,7 @@ class ChannelsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModelFactory = locator<ChannelViewModelFactory>();
+    final viewModelFactory = locator<ViewModelFactory>();
 
     return SafeArea(
       child: Scaffold(
@@ -44,7 +44,7 @@ class ChannelsPage extends StatelessWidget {
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
                     final channelId = viewModelFactory.channelIds[index];
-                    final viewModel = viewModelFactory.get(channelId);
+                    final viewModel = viewModelFactory.channel(channelId);
                     return ResourceBuilder<YoutubeChannel>(
                       resource: viewModel.channelResource,
                       loadingBuilder: (context) {

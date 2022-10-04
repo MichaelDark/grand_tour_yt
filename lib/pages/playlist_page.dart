@@ -4,7 +4,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../di/locator.dart';
 import '../models/youtube/youtube_playlist_item.dart';
 import '../utils/build_context_ext.dart';
-import '../view_models/playlist_view_model.dart';
+import '../view_models/view_model_factory.dart';
 import '../widgets/tiles/image_list_tile_shimmer.dart';
 import '../widgets/tiles/youtube_playlist_item_list_tile.dart';
 
@@ -31,7 +31,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
   @override
   Widget build(BuildContext context) {
     final args = context.getArgs<PlaylistPageArguments>();
-    final viewModel = locator<PlaylistViewModelFactory>().get(args.playlistId);
+    final viewModel = locator<ViewModelFactory>().playlist(args.playlistId);
 
     return SafeArea(
       child: Scaffold(

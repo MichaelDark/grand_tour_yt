@@ -7,7 +7,7 @@ import '../models/resources/paginated_ui_resource.dart';
 import '../models/youtube/youtube_channel.dart';
 import '../models/youtube/youtube_playlist.dart';
 import '../utils/build_context_ext.dart';
-import '../view_models/channel_view_model.dart';
+import '../view_models/view_model_factory.dart';
 import '../widgets/channel_info.dart';
 import '../widgets/resources/resource_builder.dart';
 import '../widgets/tiles/image_list_tile_shimmer.dart';
@@ -28,7 +28,7 @@ class ChannelPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final args = context.getArgs<ChannelPageArguments>();
-    final viewModel = locator<ChannelViewModelFactory>().get(args.channelId);
+    final viewModel = locator<ViewModelFactory>().channel(args.channelId);
 
     return SafeArea(
       child: Scaffold(

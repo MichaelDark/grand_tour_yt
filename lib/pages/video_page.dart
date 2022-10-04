@@ -6,7 +6,7 @@ import '../di/locator.dart';
 import '../l10n/youtube_strings.dart';
 import '../models/youtube/youtube_video.dart';
 import '../utils/build_context_ext.dart';
-import '../view_models/video_view_model.dart';
+import '../view_models/view_model_factory.dart';
 import '../widgets/resources/resource_builder.dart';
 
 class VideoPageArguments {
@@ -75,7 +75,7 @@ class _VideoPageState extends State<_VideoPage> {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = locator<VideoViewModelFactory>().get(widget.videoId);
+    final viewModel = locator<ViewModelFactory>().video(widget.videoId);
     final mediaQuery = MediaQuery.of(context);
     const aspectRatio = 16 / 9;
     final size = mediaQuery.size;

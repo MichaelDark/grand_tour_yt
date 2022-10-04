@@ -18,12 +18,10 @@ import '../services/impl/listenable_settings_service.dart' as _i8;
 import '../services/search_query_repository.dart' as _i5;
 import '../services/settings_service.dart' as _i7;
 import '../services/youtube_service.dart' as _i11;
-import '../view_models/channel_view_model.dart' as _i13;
-import '../view_models/playlist_view_model.dart' as _i14;
-import '../view_models/video_search_view_model.dart' as _i15;
-import '../view_models/video_view_model.dart' as _i16;
+import '../view_models/impl/cached_view_model_factory.dart' as _i14;
+import '../view_models/view_model_factory.dart' as _i13;
 import 'modules/logger_module.dart'
-    as _i17; // ignore_for_file: unnecessary_lambdas
+    as _i15; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -52,15 +50,9 @@ Future<_i1.GetIt> $initGetIt(
     get<_i9.AuthService>(),
     get<_i3.GoogleApiYoutubeMapper>(),
   ));
-  gh.lazySingleton<_i13.ChannelViewModelFactory>(
-      () => _i13.ChannelViewModelFactory(get<_i11.YoutubeService>()));
-  gh.lazySingleton<_i14.PlaylistViewModelFactory>(
-      () => _i14.PlaylistViewModelFactory(get<_i11.YoutubeService>()));
-  gh.lazySingleton<_i15.VideoSearchViewModelFactory>(
-      () => _i15.VideoSearchViewModelFactory(get<_i11.YoutubeService>()));
-  gh.lazySingleton<_i16.VideoViewModelFactory>(
-      () => _i16.VideoViewModelFactory(get<_i11.YoutubeService>()));
+  gh.lazySingleton<_i13.ViewModelFactory>(
+      () => _i14.CachedViewModelFactory(get<_i11.YoutubeService>()));
   return get;
 }
 
-class _$LoggerModule extends _i17.LoggerModule {}
+class _$LoggerModule extends _i15.LoggerModule {}
