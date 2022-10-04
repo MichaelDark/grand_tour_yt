@@ -3,7 +3,7 @@ import 'package:lottie/lottie.dart';
 
 import '../di/locator.dart';
 import '../l10n/youtube_strings.dart';
-import '../services/google_auth_service.dart';
+import '../services/auth_service.dart';
 import '../utils/assets.gen.dart';
 import 'channels_page.dart';
 import 'sign_in_page.dart';
@@ -34,7 +34,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   }
 
   Future<String> _getNextRoute() async {
-    final authService = locator<GoogleAuthService>();
+    final authService = locator<AuthService>();
     final currentUser = await authService.signInSilently();
     return currentUser == null ? SignInPage.routeName : ChannelsPage.routeName;
   }

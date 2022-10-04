@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 
-import '../models/resources/ui_future_resource.dart';
+import '../models/resources/impl/ui_future_resource.dart';
 import '../models/resources/ui_resource.dart';
 import '../models/youtube/youtube_video.dart';
 import '../services/youtube_service.dart';

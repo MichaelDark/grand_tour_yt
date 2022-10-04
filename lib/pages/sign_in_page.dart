@@ -3,7 +3,7 @@ import 'package:lottie/lottie.dart';
 
 import '../di/locator.dart';
 import '../l10n/youtube_strings.dart';
-import '../services/google_auth_service.dart';
+import '../services/auth_service.dart';
 import '../utils/assets.gen.dart';
 import '../widgets/show_up.dart';
 import 'channels_page.dart';
@@ -19,7 +19,7 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   void _onSignIn() async {
-    await locator<GoogleAuthService>().signIn();
+    await locator<AuthService>().signIn();
     if (!mounted) return;
     Navigator.of(context).pushReplacementNamed(
       ChannelsPage.routeName,

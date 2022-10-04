@@ -5,7 +5,7 @@ import 'package:timeago/timeago.dart' as timeago;
 import '../di/locator.dart';
 import '../l10n/youtube_strings.dart';
 import '../models/youtube/youtube_playlist_item.dart';
-import '../services/search_query_service.dart';
+import '../services/search_query_repository.dart';
 import '../view_models/video_search_view_model.dart';
 import 'tiles/image_list_tile_shimmer.dart';
 import 'tiles/youtube_playlist_item_list_tile.dart';
@@ -53,7 +53,7 @@ class YoutubeSearchDelegate extends SearchDelegate {
       );
     }
 
-    final searchQueryService = locator<SearchQueryService>();
+    final searchQueryService = locator<SearchQueryRepository>();
     searchQueryService.saveQuery(query);
 
     final viewModelFactory = locator<VideoSearchViewModelFactory>();
@@ -85,9 +85,9 @@ class YoutubeSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final searchQueryService = locator<SearchQueryService>();
+    final searchQueryService = locator<SearchQueryRepository>();
     final cachedQueries = searchQueryService.getCachedQueries().toList();
-    cachedQueries.sort((a, b) => b.value.compareTo(a.value));
+    cachedQueries.sort((a, b) => b.searchedAt.compareTo(a.searchedAt));
 
     if (cachedQueries.isNotEmpty) {
       return Column(
@@ -95,15 +95,15 @@ class YoutubeSearchDelegate extends SearchDelegate {
         children: <Widget>[
           ...cachedQueries.map((cachedQuery) {
             return ListTile(
-              title: Text(cachedQuery.key),
+              title: Text(cachedQuery.query),
               subtitle: Text(
                 timeago.format(
-                  cachedQuery.value,
+                  cachedQuery.searchedAt,
                   locale: Localizations.localeOf(context).toLanguageTag(),
                 ),
               ),
               onTap: () {
-                query = cachedQuery.key;
+                query = cachedQuery.query;
               },
             );
           }),

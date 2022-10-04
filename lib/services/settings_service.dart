@@ -1,35 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
+import 'package:flutter/material.dart' show Locale, Listenable, Brightness;
 
-import '../l10n/youtube_strings.dart';
+abstract class SettingsService implements Listenable {
+  Brightness get brightness;
+  Locale get locale;
 
-@singleton
-class SettingsService extends ChangeNotifier {
-  static Locale _getInitialLocale() {
-    return basicLocaleListResolution(
-      WidgetsBinding.instance.platformDispatcher.locales,
-      YoutubeStrings.supportedLocales,
-    );
-  }
+  /// Switch between dark and list brightness
+  void toggleBrightness();
 
-  Brightness brightness;
-  Locale locale;
-
-  SettingsService()
-      : brightness = Brightness.dark,
-        locale = _getInitialLocale();
-
-  void toggleBrightness() {
-    if (brightness == Brightness.light) {
-      brightness = Brightness.dark;
-    } else {
-      brightness = Brightness.light;
-    }
-    notifyListeners();
-  }
-
-  void setLocale(Locale newLocale) {
-    locale = newLocale;
-    notifyListeners();
-  }
+  /// Set new app locale
+  void setLocale(Locale newLocale);
 }

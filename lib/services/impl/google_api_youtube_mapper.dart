@@ -9,15 +9,15 @@ import 'package:googleapis/youtube/v3.dart'
 import 'package:injectable/injectable.dart';
 import 'package:iso_duration_parser/iso_duration_parser.dart';
 
-import '../models/youtube/youtube_channel.dart';
-import '../models/youtube/youtube_playlist.dart';
-import '../models/youtube/youtube_playlist_item.dart';
-import '../models/youtube/youtube_response.dart';
-import '../models/youtube/youtube_thumbnail.dart';
-import '../models/youtube/youtube_video.dart';
+import '../../models/youtube/youtube_channel.dart';
+import '../../models/youtube/youtube_playlist.dart';
+import '../../models/youtube/youtube_playlist_item.dart';
+import '../../models/youtube/youtube_response.dart';
+import '../../models/youtube/youtube_thumbnail.dart';
+import '../../models/youtube/youtube_video.dart';
 
 @lazySingleton
-class YoutubeMapper {
+class GoogleApiYoutubeMapper {
   YoutubeChannel mapChannel(ChannelListResponse response) {
     final channel = response.items!.first;
 

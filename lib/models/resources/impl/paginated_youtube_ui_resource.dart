@@ -1,7 +1,7 @@
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-import '../youtube/youtube_response.dart';
-import 'paginated_ui_resource.dart';
+import '../../youtube/youtube_response.dart';
+import '../paginated_ui_resource.dart';
 
 class PaginatedYoutubeUiResource<T> extends PaginatedUiResource<T> {
   @override

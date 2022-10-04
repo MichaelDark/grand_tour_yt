@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'ui_resource.dart';
+import '../ui_resource.dart';
 
 typedef UiResourceLoader<T> = Future<T> Function();
 

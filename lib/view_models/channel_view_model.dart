@@ -1,12 +1,13 @@
 import 'package:injectable/injectable.dart';
 
+import '../models/resources/impl/paginated_youtube_ui_resource.dart';
+import '../models/resources/impl/ui_future_resource.dart';
 import '../models/resources/paginated_ui_resource.dart';
-import '../models/resources/paginated_youtube_ui_resource.dart';
-import '../models/resources/ui_future_resource.dart';
 import '../models/resources/ui_resource.dart';
 import '../models/youtube/youtube_channel.dart';
 import '../models/youtube/youtube_playlist.dart';
 import '../services/youtube_service.dart';
+import '../utils/youtube_constants.dart';
 
 @lazySingleton
 class ChannelViewModelFactory {
@@ -14,7 +15,7 @@ class ChannelViewModelFactory {
 
   ChannelViewModelFactory(this._service);
 
-  List<String> get channelIds => YoutubeChannel.channels;
+  List<String> get channelIds => YoutubeConstants.channels;
 
   final Map<String, ChannelViewModel> _cache = {};
 

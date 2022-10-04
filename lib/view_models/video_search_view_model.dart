@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 
+import '../models/resources/impl/paginated_youtube_ui_resource.dart';
 import '../models/resources/paginated_ui_resource.dart';
-import '../models/resources/paginated_youtube_ui_resource.dart';
 import '../models/youtube/youtube_playlist_item.dart';
 import '../services/youtube_service.dart';
 

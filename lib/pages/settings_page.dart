@@ -4,7 +4,7 @@ import 'package:recase/recase.dart';
 
 import '../di/locator.dart';
 import '../l10n/youtube_strings.dart';
-import '../services/search_query_service.dart';
+import '../services/search_query_repository.dart';
 import '../services/settings_service.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -48,7 +48,7 @@ class SettingsPage extends StatelessWidget {
     );
 
     if (result == true) {
-      final searchQueryService = locator<SearchQueryService>();
+      final searchQueryService = locator<SearchQueryRepository>();
       await searchQueryService.clearCachedQueries();
     }
   }

@@ -7,18 +7,23 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
+import 'package:logger/logger.dart' as _i4;
 
-import '../services/google_auth_service.dart' as _i7;
-import '../services/logging_service.dart' as _i3;
-import '../services/search_query_service.dart' as _i4;
-import '../services/settings_service.dart' as _i5;
-import '../services/youtube_mapper.dart' as _i6;
-import '../services/youtube_service.dart' as _i8;
-import '../view_models/channel_view_model.dart' as _i9;
-import '../view_models/playlist_view_model.dart' as _i10;
-import '../view_models/video_search_view_model.dart' as _i11;
-import '../view_models/video_view_model.dart'
-    as _i12; // ignore_for_file: unnecessary_lambdas
+import '../services/auth_service.dart' as _i9;
+import '../services/impl/google_api_youtube_mapper.dart' as _i3;
+import '../services/impl/google_api_youtube_service.dart' as _i12;
+import '../services/impl/google_auth_service.dart' as _i10;
+import '../services/impl/hive_search_query_repository.dart' as _i6;
+import '../services/impl/listenable_settings_service.dart' as _i8;
+import '../services/search_query_repository.dart' as _i5;
+import '../services/settings_service.dart' as _i7;
+import '../services/youtube_service.dart' as _i11;
+import '../view_models/channel_view_model.dart' as _i13;
+import '../view_models/playlist_view_model.dart' as _i14;
+import '../view_models/video_search_view_model.dart' as _i15;
+import '../view_models/video_view_model.dart' as _i16;
+import 'modules/logger_module.dart'
+    as _i17; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -32,26 +37,30 @@ Future<_i1.GetIt> $initGetIt(
     environment,
     environmentFilter,
   );
-  gh.lazySingleton<_i3.LoggingService>(() => _i3.LoggingService());
-  await gh.singletonAsync<_i4.SearchQueryService>(
-    () => _i4.SearchQueryService.create(),
+  final loggerModule = _$LoggerModule();
+  gh.lazySingleton<_i3.GoogleApiYoutubeMapper>(
+      () => _i3.GoogleApiYoutubeMapper());
+  gh.lazySingleton<_i4.Logger>(() => loggerModule.logger());
+  await gh.singletonAsync<_i5.SearchQueryRepository>(
+    () => _i6.HiveSearchQueryRepository.create(),
     preResolve: true,
   );
-  gh.singleton<_i5.SettingsService>(_i5.SettingsService());
-  gh.lazySingleton<_i6.YoutubeMapper>(() => _i6.YoutubeMapper());
-  gh.lazySingleton<_i7.GoogleAuthService>(
-      () => _i7.GoogleAuthService(get<_i3.LoggingService>()));
-  gh.singleton<_i8.YoutubeService>(_i8.YoutubeService(
-    get<_i7.GoogleAuthService>(),
-    get<_i6.YoutubeMapper>(),
+  gh.singleton<_i7.SettingsService>(_i8.ListenableSettingsService());
+  gh.lazySingleton<_i9.AuthService>(
+      () => _i10.GoogleAuthService(get<_i4.Logger>()));
+  gh.singleton<_i11.YoutubeService>(_i12.GoogleApiYoutubeService(
+    get<_i9.AuthService>(),
+    get<_i3.GoogleApiYoutubeMapper>(),
   ));
-  gh.lazySingleton<_i9.ChannelViewModelFactory>(
-      () => _i9.ChannelViewModelFactory(get<_i8.YoutubeService>()));
-  gh.lazySingleton<_i10.PlaylistViewModelFactory>(
-      () => _i10.PlaylistViewModelFactory(get<_i8.YoutubeService>()));
-  gh.lazySingleton<_i11.VideoSearchViewModelFactory>(
-      () => _i11.VideoSearchViewModelFactory(get<_i8.YoutubeService>()));
-  gh.lazySingleton<_i12.VideoViewModelFactory>(
-      () => _i12.VideoViewModelFactory(get<_i8.YoutubeService>()));
+  gh.lazySingleton<_i13.ChannelViewModelFactory>(
+      () => _i13.ChannelViewModelFactory(get<_i11.YoutubeService>()));
+  gh.lazySingleton<_i14.PlaylistViewModelFactory>(
+      () => _i14.PlaylistViewModelFactory(get<_i11.YoutubeService>()));
+  gh.lazySingleton<_i15.VideoSearchViewModelFactory>(
+      () => _i15.VideoSearchViewModelFactory(get<_i11.YoutubeService>()));
+  gh.lazySingleton<_i16.VideoViewModelFactory>(
+      () => _i16.VideoViewModelFactory(get<_i11.YoutubeService>()));
   return get;
 }
+
+class _$LoggerModule extends _i17.LoggerModule {}
