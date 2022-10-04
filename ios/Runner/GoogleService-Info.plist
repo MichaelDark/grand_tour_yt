@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>535947957189-ubqi3227n1pgir8k7hulhpd1rebln0ld.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.535947957189-ubqi3227n1pgir8k7hulhpd1rebln0ld</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>535947957189-l5ocetu6229qfc86n9bomj2m505eg25g.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDifMzxhjGIST_izgbqUZVlVhVDbkxahcQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>535947957189</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.proarea.mykhailotemnokhud.grandtouryt</string>
+	<key>PROJECT_ID</key>
+	<string>grand-tour-yt-demo</string>
+	<key>STORAGE_BUCKET</key>
+	<string>grand-tour-yt-demo.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:535947957189:ios:5c3a0e1a156c98ebbf31ac</string>
+</dict>
+</plist>

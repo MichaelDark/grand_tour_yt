@@ -1,0 +1,7 @@
+arb-dir: lib/l10n
+output-class: YoutubeStrings
+template-arb-file: strings_en.arb
+output-localization-file: youtube_strings.dart
+synthetic-package: false
+nullable-getter: false
+header: "// ignore_for_file: unnecessary_string_interpolations"

@@ -1,0 +1,76 @@
+{
+    "appName": "Grand Tour YT Demo",
+    "demoLabel": "demo",
+    "errorViewHint": "Ooopsy, looks like an error occured",
+    "errorViewRetryLabel": "Retry",
+    "splashText": "Starting up...",
+    "signInPageHint": "We need your Google Account to access Youtube",
+    "signInPageButtonLabel": "Sign In",
+    "channelsPageTitle": "Favourite channels",
+    "nSubscribers": "{count,plural, =0{0 subscribers} =1{{count} subscriber} other{{count} subscribers}}",
+    "@nSubscribers": {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "format": "compactCurrency",
+                "optionalParameters": {
+                    "symbol": ""
+                }
+            }
+        }
+    },
+    "nVideos": "{count,plural, =0{0 videos} =1{{count} video} other{{count} videos}}",
+    "@nVideos": {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "format": "decimalPattern"
+            }
+        }
+    },
+    "nViews": "{count,plural, =0{0 views} =1{{count} view} other{{count} views}}",
+    "@nViews": {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "format": "decimalPattern"
+            }
+        }
+    },
+    "numberWithDecimalPattern": "{number}",
+    "@numberWithDecimalPattern": {
+        "placeholders": {
+            "number": {
+                "type": "int",
+                "format": "decimalPattern"
+            }
+        }
+    },
+    "videoDate": "{date} ({ago})",
+    "@videoDate": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd"
+            },
+            "ago": {
+                "type": "String"
+            }
+        }
+    },
+    "uploadedVideosCaption": "Uploaded videos",
+    "playlistsCaption": "Playlists",
+    "videoLicencedLabel": "Licenced",
+    "settingsPageTitle": "Settings",
+    "settingsPageThemeTitle": "Theme",
+    "settingsPageThemeSubtitle": "Tap to toggle dark and light theme",
+    "settingsPageLanguageSubtitle": "Tap to change language",
+    "settingsPageClearSearchHistoryTitle": "Clear Search History",
+    "settingsPageClearSearchHistorySubtitle": "Tap to clear search history across for videos across all channels",
+    "searchErrorEmpty": "Enter search query in the field above",
+    "searchErrorMoreThenTwoSymbols": "Search term must be longer than two letters",
+    "clearSearchHistoryDialogTitle": "Clear Search History",
+    "clearSearchHistoryDialogPrompt": "Are you sure you want to clear search history?\n\nThis action cannot be undone.",
+    "clearSearchHistoryDialogPositiveButton": "Clear history",
+    "clearSearchHistoryDialogNegativeButton": "Cancel"
+}

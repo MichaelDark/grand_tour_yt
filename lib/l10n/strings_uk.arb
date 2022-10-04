@@ -1,0 +1,76 @@
+{
+    "appName": "Grand Tour YT Демо",
+    "demoLabel": "демо",
+    "errorViewHint": "Ууупсі, лишенько трапилося",
+    "errorViewRetryLabel": "Спробувати ще",
+    "splashText": "Запускаємо додаток...",
+    "signInPageHint": "Нам потрібен ваш Google акаунт для доступу до Youtube",
+    "signInPageButtonLabel": "Увійти",
+    "channelsPageTitle": "Улюблені канали",
+    "nSubscribers": "{count,plural, =0{0 підписників} =1{{count} підписник} other{{count} підписників}}",
+    "@nSubscribers": {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "format": "compactCurrency",
+                "optionalParameters": {
+                    "symbol": ""
+                }
+            }
+        }
+    },
+    "nVideos": "{count,plural, other{{count} відео}}",
+    "@nVideos": {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "format": "decimalPattern"
+            }
+        }
+    },
+    "nViews": "{count,plural, =0{0 переглядів} =1{{count} перегляд} other{{count} переглядів}}",
+    "@nViews": {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "format": "decimalPattern"
+            }
+        }
+    },
+    "numberWithDecimalPattern": "{number}",
+    "@numberWithDecimalPattern": {
+        "placeholders": {
+            "number": {
+                "type": "int",
+                "format": "decimalPattern"
+            }
+        }
+    },
+    "videoDate": "{date} ({ago})",
+    "@videoDate": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd"
+            },
+            "ago": {
+                "type": "String"
+            }
+        }
+    },
+    "uploadedVideosCaption": "Завантажені відео",
+    "playlistsCaption": "Плейлисти",
+    "videoLicencedLabel": "Ліцензоване",
+    "settingsPageTitle": "Налаштування",
+    "settingsPageThemeTitle": "Тема",
+    "settingsPageThemeSubtitle": "Натисніть аби перемкнути тему",
+    "settingsPageLanguageSubtitle": "Натисніть аби змінити мову застосунку",
+    "settingsPageClearSearchHistoryTitle": "Видалити історію пошуку",
+    "settingsPageClearSearchHistorySubtitle": "Натисніть аби видалити історію пошуку відео по каналах",
+    "searchErrorEmpty": "Введіть пошуковий запит у поле вище",
+    "searchErrorMoreThenTwoSymbols": "Пошуковий запит повинен бути довший за два символи",
+    "clearSearchHistoryDialogTitle": "Видалення історії пошуку",
+    "clearSearchHistoryDialogPrompt": "Вви впевнені, що ви хочете видалити історію пошуку?\n\nЦя дія не може бути скасована.",
+    "clearSearchHistoryDialogPositiveButton": "Видалити історію",
+    "clearSearchHistoryDialogNegativeButton": "Відмінити"
+}

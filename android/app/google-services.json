@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "535947957189",
+    "project_id": "grand-tour-yt-demo",
+    "storage_bucket": "grand-tour-yt-demo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:535947957189:android:3488835b134fe4c2bf31ac",
+        "android_client_info": {
+          "package_name": "com.proarea.mykhailotemnokhud.grandtouryt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "535947957189-l5ocetu6229qfc86n9bomj2m505eg25g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.proarea.mykhailotemnokhud.grandtouryt",
+            "certificate_hash": "d8bc377fcd82191cdf89234a291bce455941e76e"
+          }
+        },
+        {
+          "client_id": "535947957189-nu87d5p57eg649qihb2n3c7bc7k0vblm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUexBs9ftCsiSA-6Yae2urUkpSS12LzBw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "535947957189-nu87d5p57eg649qihb2n3c7bc7k0vblm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "535947957189-ubqi3227n1pgir8k7hulhpd1rebln0ld.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.proarea.mykhailotemnokhud.grandtouryt"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
