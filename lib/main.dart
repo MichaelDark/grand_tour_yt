@@ -114,7 +114,7 @@ class MyApp extends StatelessWidget {
     Widget app = child!;
 
     app = ScrollConfiguration(
-      behavior: const CustomScrollBehavior(),
+      behavior: const _CustomScrollBehavior(),
       child: app,
     );
 
@@ -128,8 +128,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class CustomScrollBehavior extends ScrollBehavior {
-  const CustomScrollBehavior();
+class _CustomScrollBehavior extends ScrollBehavior {
+  const _CustomScrollBehavior();
 
   @override
   ScrollPhysics getScrollPhysics(BuildContext context) {

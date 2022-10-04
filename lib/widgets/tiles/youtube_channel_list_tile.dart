@@ -16,7 +16,7 @@ class YoutubeChannelListTile extends StatelessWidget {
     return ImageListTile(
       title: channel.title,
       image: channel.thumbnail.image,
-      additionalWidgets: [
+      stackChildren: [
         if (channel.subscriberCount != null)
           Positioned(
             top: 8,

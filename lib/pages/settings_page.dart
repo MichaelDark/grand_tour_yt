@@ -6,6 +6,7 @@ import '../di/locator.dart';
 import '../l10n/youtube_strings.dart';
 import '../services/search_query_repository.dart';
 import '../services/settings_service.dart';
+import '../widgets/clear_history_confirmation_dialog.dart';
 
 class SettingsPage extends StatelessWidget {
   static const routeName = '/settings';
@@ -15,36 +16,7 @@ class SettingsPage extends StatelessWidget {
   void _onClearSearchHistory(BuildContext context) async {
     final result = await showDialog(
       context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            YoutubeStrings.of(context).clearSearchHistoryDialogTitle,
-          ),
-          content: Text(
-            YoutubeStrings.of(context).clearSearchHistoryDialogPrompt,
-          ),
-          actions: [
-            TextButton(
-              child: Text(
-                YoutubeStrings.of(context)
-                    .clearSearchHistoryDialogPositiveButton,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
-            ),
-            TextButton(
-              child: Text(
-                YoutubeStrings.of(context)
-                    .clearSearchHistoryDialogNegativeButton,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
+      builder: (_) => const ClearHistoryConfirmationDialog(),
     );
 
     if (result == true) {

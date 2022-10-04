@@ -5,6 +5,7 @@ import '../di/locator.dart';
 import '../l10n/youtube_strings.dart';
 import '../services/auth_service.dart';
 import '../utils/assets.gen.dart';
+import '../widgets/resources/error_view.dart';
 import '../widgets/show_up.dart';
 import 'channels_page.dart';
 
@@ -18,12 +19,18 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  dynamic _error;
+
   void _onSignIn() async {
-    await locator<AuthService>().signIn();
-    if (!mounted) return;
-    Navigator.of(context).pushReplacementNamed(
-      ChannelsPage.routeName,
-    );
+    try {
+      await locator<AuthService>().signIn();
+      if (!mounted) return;
+      Navigator.of(context).pushReplacementNamed(
+        ChannelsPage.routeName,
+      );
+    } catch (error) {
+      setState(() => _error = error);
+    }
   }
 
   @override
@@ -53,17 +60,30 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ShowUp(
-                  delay: const Duration(milliseconds: 2000),
-                  child: ElevatedButton(
-                    onPressed: _onSignIn,
-                    child:
-                        Text(YoutubeStrings.of(context).signInPageButtonLabel),
+              if (_error == null)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ShowUp(
+                    delay: const Duration(milliseconds: 1750),
+                    child: ElevatedButton(
+                      onPressed: _onSignIn,
+                      child: Text(
+                        YoutubeStrings.of(context).signInPageButtonLabel,
+                      ),
+                    ),
+                  ),
+                )
+              else
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ShowUp(
+                    delay: const Duration(milliseconds: 1750),
+                    child: ErrorView(
+                      _error,
+                      retry: _onSignIn,
+                    ),
                   ),
                 ),
-              ),
             ],
           ),
         ),

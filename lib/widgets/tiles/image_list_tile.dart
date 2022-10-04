@@ -11,14 +11,14 @@ class ImageListTile extends StatelessWidget {
 
   final String title;
   final ImageProvider image;
-  final List<Widget> additionalWidgets;
+  final List<Widget> stackChildren;
   final VoidCallback onTap;
 
   const ImageListTile({
     Key? key,
     required this.title,
     required this.image,
-    this.additionalWidgets = const [],
+    this.stackChildren = const [],
     required this.onTap,
   }) : super(key: key);
 
@@ -67,7 +67,7 @@ class ImageListTile extends StatelessWidget {
                       ),
                     ),
                   ),
-                  ...additionalWidgets,
+                  ...stackChildren,
                 ],
               ),
             ),

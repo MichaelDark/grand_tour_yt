@@ -112,7 +112,7 @@ class _VideoPageState extends State<_VideoPage> {
                     child: ResourceBuilder(
                       resource: viewModel.videoResource,
                       builder: (context, video) {
-                        return VideoDetailsView(video: video);
+                        return _VideoDetailsView(video: video);
                       },
                     ),
                   ),
@@ -126,10 +126,13 @@ class _VideoPageState extends State<_VideoPage> {
   }
 }
 
-class VideoDetailsView extends StatelessWidget {
+class _VideoDetailsView extends StatelessWidget {
   final YoutubeVideo video;
 
-  const VideoDetailsView({super.key, required this.video});
+  const _VideoDetailsView({
+    Key? key,
+    required this.video,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -186,20 +189,20 @@ class VideoDetailsView extends StatelessWidget {
               spacing: 8,
               runSpacing: 8,
               children: [
-                IconedLabel(
+                _IconedLabel(
                   icon: const Icon(Icons.thumb_up_alt_rounded),
                   label: YoutubeStrings.of(context).numberWithDecimalPattern(
                     video.likeCount,
                   ),
                 ),
-                IconedLabel(
+                _IconedLabel(
                   icon: const Icon(Icons.comment_rounded),
                   label: YoutubeStrings.of(context).numberWithDecimalPattern(
                     video.commentCount,
                   ),
                 ),
                 if (video.licensedContent) ...[
-                  IconedLabel(
+                  _IconedLabel(
                     icon: const Icon(Icons.verified_rounded),
                     label: YoutubeStrings.of(context).videoLicencedLabel,
                   ),
@@ -220,15 +223,15 @@ class VideoDetailsView extends StatelessWidget {
   }
 }
 
-class IconedLabel extends StatelessWidget {
+class _IconedLabel extends StatelessWidget {
   final Widget icon;
   final String label;
 
-  const IconedLabel({
-    super.key,
+  const _IconedLabel({
+    Key? key,
     required this.icon,
     required this.label,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

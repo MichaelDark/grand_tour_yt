@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../di/locator.dart';
 import '../models/youtube/youtube_playlist_item.dart';
 import '../utils/build_context_ext.dart';
 import '../view_models/view_model_factory.dart';
-import '../widgets/tiles/image_list_tile_shimmer.dart';
+import '../widgets/slivers/sliver_paged_image_tile_list.dart';
 import '../widgets/tiles/youtube_playlist_item_list_tile.dart';
 
 class PlaylistPageArguments {
@@ -42,24 +41,11 @@ class _PlaylistPageState extends State<PlaylistPage> {
         body: SafeArea(
           child: CustomScrollView(
             slivers: [
-              SliverPadding(
-                padding: const EdgeInsets.all(16),
-                sliver: PagedSliverList(
-                  pagingController: viewModel.playlistItemsResource.controller,
-                  builderDelegate:
-                      PagedChildBuilderDelegate<YoutubePlaylistItem>(
-                    animateTransitions: true,
-                    itemBuilder: (_, item, __) {
-                      return YoutubePlaylistItemListTile(playlistItem: item);
-                    },
-                    newPageProgressIndicatorBuilder: (context) {
-                      return const ImageListTileShimmer();
-                    },
-                    firstPageProgressIndicatorBuilder: (context) {
-                      return const ImageListTileShimmer();
-                    },
-                  ),
-                ),
+              SliverPagedImageTileList<YoutubePlaylistItem>(
+                resource: viewModel.playlistItemsResource,
+                builder: (_, item, __) {
+                  return YoutubePlaylistItemListTile(playlistItem: item);
+                },
               ),
             ],
           ),

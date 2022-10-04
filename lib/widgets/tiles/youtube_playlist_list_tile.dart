@@ -15,7 +15,7 @@ class YoutubePlaylistListTile extends StatelessWidget {
     return ImageListTile(
       title: playlist.title,
       image: playlist.thumbnail.image,
-      additionalWidgets: [
+      stackChildren: [
         Positioned(
           top: 8,
           right: 8,

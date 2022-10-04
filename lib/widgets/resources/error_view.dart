@@ -28,8 +28,9 @@ class ErrorView extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 16),
               child: Text(
                 error.toString(),
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.start,
                 maxLines: 4,
+                overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.ubuntuMono().copyWith(
                   color: Theme.of(context).errorColor,
                 ),
@@ -37,8 +38,10 @@ class ErrorView extends StatelessWidget {
             ),
             if (retry != null)
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 16,
+                ),
                 child: ElevatedButton(
                   onPressed: retry,
                   child: Text(YoutubeStrings.of(context).errorViewRetryLabel),

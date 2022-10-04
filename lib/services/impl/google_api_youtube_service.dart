@@ -19,16 +19,8 @@ class GoogleApiYoutubeService implements YoutubeService {
 
   GoogleApiYoutubeService(this._authService, this._mapper);
 
-  Future<YouTubeApi>? _youtubeApi;
-
   @visibleForTesting
   Future<YouTubeApi> getApi() async {
-    _youtubeApi ??= createApi();
-    return _youtubeApi!;
-  }
-
-  @visibleForTesting
-  Future<YouTubeApi> createApi() async {
     final client = await _authService.createAuthenticatedHttpClient();
     if (client == null) {
       throw Exception('Cannot create HTTP Client for Youtube API :(');

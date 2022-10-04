@@ -17,7 +17,6 @@ dependencies:
   get_it: ^7.2.0
   injectable: ^1.5.3
   intl: ^0.17.0
-  rxdart: ^0.27.5
 
   # Google API
   google_sign_in: ^5.4.2

@@ -6,7 +6,7 @@ abstract class YoutubeConstants {
   static const smarterEveryDayChannelId = 'UC6107grRI4m0o2-emgoDnAA';
   static const iDidAThingChannelId = 'UCJLZe_NoiG0hT7QCX_9vmqw';
 
-  static const parts = $Parts._();
+  static const parts = _Parts();
   static const channels = [
     grandTourChannelId,
     driveTribeChannelId,
@@ -19,8 +19,8 @@ abstract class YoutubeConstants {
   YoutubeConstants._();
 }
 
-class $Parts {
-  const $Parts._();
+class _Parts {
+  const _Parts();
 
   List<String> get channels => [
         'snippet',

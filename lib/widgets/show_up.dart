@@ -28,10 +28,14 @@ class _ShowUpState extends State<ShowUp> with TickerProviderStateMixin {
     const duration = Duration(milliseconds: 500);
     _controller = AnimationController(vsync: this, duration: duration);
 
-    final offsetTween =
-        Tween<Offset>(begin: const Offset(0.0, 0.35), end: Offset.zero);
-    final offsetAnimation =
-        CurvedAnimation(curve: Curves.decelerate, parent: _controller);
+    final offsetTween = Tween<Offset>(
+      begin: const Offset(0.0, 0.35),
+      end: Offset.zero,
+    );
+    final offsetAnimation = CurvedAnimation(
+      curve: Curves.decelerate,
+      parent: _controller,
+    );
     _offsetAnimation = offsetTween.animate(offsetAnimation);
 
     _timer = Timer(widget.delay, () => _controller.forward());
