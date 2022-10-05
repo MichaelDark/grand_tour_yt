@@ -22,6 +22,7 @@ dependencies:
   google_sign_in: ^5.4.2
   googleapis: ^9.2.0
   extension_google_sign_in_as_googleapis_auth: ^2.0.7
+  http: ^0.13.5
   iso_duration_parser: ^1.1.1
 
   # Persistence

@@ -40,13 +40,15 @@ Future<_i1.GetIt> $initGetIt(
       () => _i3.GoogleApiYoutubeMapper());
   gh.lazySingleton<_i4.Logger>(() => loggerModule.logger());
   await gh.singletonAsync<_i5.SearchQueryRepository>(
-    () => _i6.HiveSearchQueryRepository.create(),
+    () => _i6.HiveSearchQueryRepository.create(get<_i4.Logger>()),
     preResolve: true,
   );
-  gh.singleton<_i7.SettingsService>(_i8.ListenableSettingsService());
+  gh.singleton<_i7.SettingsService>(
+      _i8.ListenableSettingsService(get<_i4.Logger>()));
   gh.lazySingleton<_i9.AuthService>(
       () => _i10.GoogleAuthService(get<_i4.Logger>()));
   gh.singleton<_i11.YoutubeService>(_i12.GoogleApiYoutubeService(
+    get<_i4.Logger>(),
     get<_i9.AuthService>(),
     get<_i3.GoogleApiYoutubeMapper>(),
   ));

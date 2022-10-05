@@ -1,5 +1,6 @@
 import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
+import 'package:logger/logger.dart';
 
 import '../../models/db/search_query.dart';
 import '../search_query_repository.dart';
@@ -8,31 +9,47 @@ import '../search_query_repository.dart';
 @Singleton(as: SearchQueryRepository)
 class HiveSearchQueryRepository implements SearchQueryRepository {
   @factoryMethod
-  static Future<HiveSearchQueryRepository> create() async {
+  static Future<HiveSearchQueryRepository> create(Logger logger) async {
     var box = await Hive.openBox<DateTime>('searchQueriesBox');
-    return HiveSearchQueryRepository._(box);
+    return HiveSearchQueryRepository._(logger, box);
   }
 
+  final Logger _logger;
   final Box<DateTime> _searchQueriesBox;
 
-  const HiveSearchQueryRepository._(this._searchQueriesBox);
+  const HiveSearchQueryRepository._(this._logger, this._searchQueriesBox);
 
   @override
   Future<void> saveQuery(String query) async {
-    await _searchQueriesBox.put(query, DateTime.now());
+    try {
+      await _searchQueriesBox.put(query, DateTime.now());
+    } catch (e, s) {
+      _logger.e('Error saving search query "$query"', e, s);
+      rethrow;
+    }
   }
 
   @override
   List<SearchQuery> getCachedQueries() {
-    final keys = _searchQueriesBox.keys;
-    return keys
-        .whereType<String>()
-        .map((key) => SearchQuery(_searchQueriesBox.get(key)!, key))
-        .toList();
+    try {
+      final keys = _searchQueriesBox.keys;
+      return keys
+          .whereType<String>()
+          .map((key) => SearchQuery(_searchQueriesBox.get(key)!, key))
+          .toList();
+    } catch (e, s) {
+      _logger.e('Error getting saved search queries', e, s);
+      rethrow;
+    }
   }
 
   @override
   Future<void> clearCachedQueries() async {
-    await _searchQueriesBox.clear();
+    try {
+      await _searchQueriesBox.clear();
+    } catch (e, s) {
+      _logger.e('Error clearing saved search queries', e, s);
+      rethrow;
+    }
   }
 }

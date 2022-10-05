@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:logger/logger.dart';
 
 import '../../l10n/youtube_strings.dart';
 import '../settings_service.dart';
@@ -14,13 +15,15 @@ class ListenableSettingsService extends ChangeNotifier
     );
   }
 
+  final Logger _logger;
+
   @override
   Brightness brightness;
 
   @override
   Locale locale;
 
-  ListenableSettingsService()
+  ListenableSettingsService(this._logger)
       : brightness = Brightness.dark,
         locale = _getInitialLocale();
 
@@ -36,6 +39,13 @@ class ListenableSettingsService extends ChangeNotifier
 
   @override
   void setLocale(Locale newLocale) {
+    if (YoutubeStrings.supportedLocales.contains(newLocale)) {
+      _logger.e(
+        'Trying to set locale that is not in the list of supported locales: '
+        '${newLocale.toLanguageTag()} not in '
+        '${YoutubeStrings.supportedLocales.map((l) => l.toLanguageTag()).toList()}',
+      );
+    }
     locale = newLocale;
     notifyListeners();
   }

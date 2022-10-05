@@ -28,8 +28,8 @@ class _SignInPageState extends State<SignInPage> {
       Navigator.of(context).pushReplacementNamed(
         ChannelsPage.routeName,
       );
-    } catch (error) {
-      setState(() => _error = error);
+    } catch (e) {
+      setState(() => _error = e);
     }
   }
 
