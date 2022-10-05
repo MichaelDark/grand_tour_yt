@@ -7,6 +7,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'youtube_strings_en.dart';
+import 'youtube_strings_es.dart';
+import 'youtube_strings_fr.dart';
 import 'youtube_strings_uk.dart';
 
 /// Callers can lookup localized strings with an instance of YoutubeStrings
@@ -91,6 +93,8 @@ abstract class YoutubeStrings {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
+    Locale('es'),
+    Locale('fr'),
     Locale('uk')
   ];
 
@@ -272,7 +276,7 @@ class _YoutubeStringsDelegate extends LocalizationsDelegate<YoutubeStrings> {
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['en', 'uk'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en', 'es', 'fr', 'uk'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_YoutubeStringsDelegate old) => false;
@@ -284,6 +288,8 @@ YoutubeStrings lookupYoutubeStrings(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'en': return YoutubeStringsEn();
+    case 'es': return YoutubeStringsEs();
+    case 'fr': return YoutubeStringsFr();
     case 'uk': return YoutubeStringsUk();
   }
 

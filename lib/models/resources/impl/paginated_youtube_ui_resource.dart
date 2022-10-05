@@ -20,8 +20,8 @@ class PaginatedYoutubeUiResource<T> extends PaginatedUiResource<T> {
         } else {
           controller.appendPage(newItems, nextPageToken);
         }
-      } catch (error) {
-        controller.error = error;
+      } catch (e) {
+        controller.error = e;
       }
     });
   }

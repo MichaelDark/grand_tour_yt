@@ -16,4 +16,27 @@ class YoutubePlaylistItem {
     required this.thumbnail,
     required this.publishedAt,
   });
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is YoutubePlaylistItem &&
+        other.id == id &&
+        other.videoId == videoId &&
+        other.title == title &&
+        other.description == description &&
+        other.thumbnail == thumbnail &&
+        other.publishedAt == publishedAt;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        videoId.hashCode ^
+        title.hashCode ^
+        description.hashCode ^
+        thumbnail.hashCode ^
+        publishedAt.hashCode;
+  }
 }

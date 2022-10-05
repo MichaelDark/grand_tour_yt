@@ -24,4 +24,35 @@ class YoutubeVideo {
     required this.likeCount,
     required this.viewCount,
   });
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is YoutubeVideo &&
+        other.id == id &&
+        other.title == title &&
+        other.description == description &&
+        other.thumbnail == thumbnail &&
+        other.publishedAt == publishedAt &&
+        other.duration == duration &&
+        other.licensedContent == licensedContent &&
+        other.commentCount == commentCount &&
+        other.likeCount == likeCount &&
+        other.viewCount == viewCount;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        title.hashCode ^
+        description.hashCode ^
+        thumbnail.hashCode ^
+        publishedAt.hashCode ^
+        duration.hashCode ^
+        licensedContent.hashCode ^
+        commentCount.hashCode ^
+        likeCount.hashCode ^
+        viewCount.hashCode;
+  }
 }

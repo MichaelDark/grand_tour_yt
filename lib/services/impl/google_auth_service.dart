@@ -1,7 +1,5 @@
 import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
-import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
@@ -10,24 +8,19 @@ import '../auth_service.dart';
 
 @LazySingleton(as: AuthService)
 class GoogleAuthService implements AuthService {
-  static const _oauthScopes = [
-    'email',
-    'https://www.googleapis.com/auth/youtube.readonly',
-  ];
+  final Logger _logger;
+  final GoogleSignIn _googleSignIn;
 
-  final Logger _log;
-  final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: _oauthScopes);
-
-  GoogleAuthService(this._log);
+  GoogleAuthService(this._logger, this._googleSignIn);
 
   @override
   Future<String?> signInSilently() async {
     try {
       final account = await _googleSignIn.signInSilently();
-      _log.d('Signed in with email: ${account?.email} ');
+      _logger.d('Signed in with email: ${account?.email} ');
       return account?.email;
-    } on PlatformException {
-      _log.d('Sign in silently failed :(');
+    } catch (e, s) {
+      _logger.d('Sign in silently failed', e, s);
       rethrow;
     }
   }
@@ -36,15 +29,20 @@ class GoogleAuthService implements AuthService {
   Future<void> signIn() async {
     try {
       final account = await _googleSignIn.signIn();
-      _log.d('Signed in with email: ${account?.email} ');
-    } on PlatformException {
-      _log.d('Sign in failed :(');
+      _logger.d('Signed in with email: ${account?.email} ');
+    } catch (e, s) {
+      _logger.d('Sign in failed', e, s);
       rethrow;
     }
   }
 
   @override
   Future<http.Client?> createAuthenticatedHttpClient() async {
-    return await _googleSignIn.authenticatedClient();
+    try {
+      return await _googleSignIn.authenticatedClient();
+    } catch (e, s) {
+      _logger.e('Error creating HTTP Client for Youtube API', e, s);
+      rethrow;
+    }
   }
 }
