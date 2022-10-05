@@ -31,6 +31,13 @@ UPD. Additional features, that are implemented:
 - [x] All View Models are granular lazy singletons
 - [x] Supports fetching additional data (i.e. parts) from the Youtube Data API
 - [x] Supports multiple languages
+    - [x] English
+    - [x] Ukrainian
+    - [x] French
+    - [x] Spanish
+- [x] Supports multiple themes
+    - [x] Dark
+    - [x] Light
 - [x] Supports full screen videos
 - [x] Supports sorting of cached search queries by the time they were last used
 
@@ -66,6 +73,7 @@ The following packages are used for various UI purposes:
 - `shimmer` - for displaying loading elements
 - `flutter_localized_locales` - for language names
 - `recase` - for changing the casing of texts
+- `characters` - for displaying the moji of the language (TBD: move to separate package)
 
 These packages are really useful, but are available only during development:
 - `mocktail` - for testing (creating mocks)

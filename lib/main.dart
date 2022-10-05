@@ -25,6 +25,8 @@ void main() async {
 
   timeago.setLocaleMessages('en', timeago.EnMessages());
   timeago.setLocaleMessages('uk', timeago.UkMessages());
+  timeago.setLocaleMessages('fr', timeago.FrMessages());
+  timeago.setLocaleMessages('es', timeago.EsMessages());
   timeago.setDefaultLocale('en');
 
   SystemChrome.setPreferredOrientations([

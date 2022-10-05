@@ -1,0 +1,76 @@
+{
+    "appName": "Grand Tour YT Démo",
+    "demoLabel": "démo",
+    "errorViewHint": "Oups, on dirait qu'une erreur s'est produite",
+    "errorViewRetryLabel": "Recommencez",
+    "splashText": "Démarrage...",
+    "signInPageHint": "Nous avons besoin de votre compte Google pour accéder à Youtube",
+    "signInPageButtonLabel": "S'identifier",
+    "channelsPageTitle": "Chaînes préférées",
+    "nSubscribers": "{count,plural, =0{0 abonnés} =1{{count} abonné} other{{count} abonnés}}",
+    "@nSubscribers": {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "format": "compactCurrency",
+                "optionalParameters": {
+                    "symbol": ""
+                }
+            }
+        }
+    },
+    "nVideos": "{count,plural, =0{0 vidéos} =1{{count} vidéo} other{{count} vidéos}}",
+    "@nVideos": {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "format": "decimalPattern"
+            }
+        }
+    },
+    "nViews": "{count,plural, =0{0 vues} =1{{count} vue} other{{count} vues}}",
+    "@nViews": {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "format": "decimalPattern"
+            }
+        }
+    },
+    "numberWithDecimalPattern": "{number}",
+    "@numberWithDecimalPattern": {
+        "placeholders": {
+            "number": {
+                "type": "int",
+                "format": "decimalPattern"
+            }
+        }
+    },
+    "videoDate": "{date} ({ago})",
+    "@videoDate": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd"
+            },
+            "ago": {
+                "type": "String"
+            }
+        }
+    },
+    "uploadedVideosCaption": "Vidéos téléchargées",
+    "playlistsCaption": "Listes de lecture",
+    "videoLicencedLabel": "Autorisé",
+    "settingsPageTitle": "Réglages",
+    "settingsPageThemeTitle": "Thème",
+    "settingsPageThemeSubtitle": "Appuyez pour basculer entre les thèmes sombre et clair",
+    "settingsPageLanguageSubtitle": "Appuyez pour changer de langue",
+    "settingsPageClearSearchHistoryTitle": "Effacer l'historique",
+    "settingsPageClearSearchHistorySubtitle": "Appuyez pour effacer l'historique de recherche des vidéos sur tous les canaux",
+    "searchErrorEmpty": "Entrez la requête de recherche dans le champ ci-dessus",
+    "searchErrorMoreThenTwoSymbols": "Le terme de recherche doit comporter plus de deux lettres",
+    "clearSearchHistoryDialogTitle": "Effacer l'historique",
+    "clearSearchHistoryDialogPrompt": "Voulez-vous vraiment effacer l'historique des recherches ?\n\nCette action est irréversible.",
+    "clearSearchHistoryDialogPositiveButton": "Histoire claire",
+    "clearSearchHistoryDialogNegativeButton": "Annuler"
+}

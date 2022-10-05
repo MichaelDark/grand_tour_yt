@@ -6,6 +6,7 @@ import '../di/locator.dart';
 import '../l10n/youtube_strings.dart';
 import '../services/search_query_repository.dart';
 import '../services/settings_service.dart';
+import '../utils/emoji_flag.dart';
 import '../widgets/clear_history_confirmation_dialog.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -70,11 +71,13 @@ class SettingsPage extends StatelessWidget {
                   return <PopupMenuEntry<Locale>>[
                     ...YoutubeStrings.supportedLocales.map(
                       (locale) {
+                        final emojiFlag = locale.emojiFlag;
+                        final prefix = emojiFlag == null ? '' : '$emojiFlag  ';
+                        final displayName = locale.getDisplayName(context);
+
                         return PopupMenuItem<Locale>(
                           value: locale,
-                          child: Text(
-                            locale.getDisplayName(context),
-                          ),
+                          child: Text('$prefix$displayName'),
                         );
                       },
                     ),
