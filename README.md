@@ -69,6 +69,7 @@ The following packages are used for various UI purposes:
 
 These packages are really useful, but are available only during development:
 - `mocktail` - for testing (creating mocks)
+- `hive_test` - for mocking `hive`/`hive_flutter`
 - `flutter_lints` - for linting the project and maintain proper code quality, that matches industry standards
 - `build_runner` - for code gen
 - `injectable_generator` - for DI code gen

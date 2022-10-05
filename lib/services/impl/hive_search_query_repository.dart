@@ -20,9 +20,9 @@ class HiveSearchQueryRepository implements SearchQueryRepository {
   const HiveSearchQueryRepository._(this._logger, this._searchQueriesBox);
 
   @override
-  Future<void> saveQuery(String query) async {
+  Future<void> saveQuery(String query, DateTime searchTime) async {
     try {
-      await _searchQueriesBox.put(query, DateTime.now());
+      await _searchQueriesBox.put(query, searchTime);
     } catch (e, s) {
       _logger.e('Error saving search query "$query"', e, s);
       rethrow;

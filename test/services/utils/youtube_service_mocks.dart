@@ -8,8 +8,9 @@ import 'package:grandtouryt/models/youtube/youtube_video.dart';
 import 'package:grandtouryt/services/auth_service.dart';
 import 'package:grandtouryt/services/impl/google_api_youtube_mapper.dart';
 import 'package:grandtouryt/services/impl/google_api_youtube_service.dart';
-import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
+
+import 'general_mocks.dart';
 
 /// Mock for `googleapis`
 class MockYoutubeApi extends Mock implements YouTubeApi {}
@@ -39,7 +40,7 @@ class MockGoogleApiYoutubeService extends GoogleApiYoutubeService {
   MockGoogleApiYoutubeService.withApi({
     required this.api,
   }) : super(
-          Logger(output: _MockLogOutput()),
+          MockLogger(),
           MockAuthService(),
           GoogleApiYoutubeMapper(),
         );
@@ -48,25 +49,13 @@ class MockGoogleApiYoutubeService extends GoogleApiYoutubeService {
     required AuthService authService,
   })  : api = null,
         super(
-          Logger(output: _MockLogOutput()),
+          MockLogger(),
           authService,
           GoogleApiYoutubeMapper(),
         );
 
   @override
   Future<YouTubeApi> getApi() async => api ?? await super.getApi();
-}
-
-/// Mock for `logger`
-class _MockLogOutput extends LogOutput {
-  @override
-  void init() {}
-
-  @override
-  void output(OutputEvent event) {}
-
-  @override
-  void destroy() {}
 }
 
 /// Mock data for testing

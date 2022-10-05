@@ -45,6 +45,7 @@ dev_dependencies:
     sdk: flutter
   # Tests
   mocktail: ^0.3.0
+  hive_test: ^1.0.1
 
   # Lints
   flutter_lints: ^2.0.0

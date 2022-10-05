@@ -53,7 +53,7 @@ class YoutubeSearchDelegate extends SearchDelegate {
     }
 
     final searchQueryService = locator<SearchQueryRepository>();
-    searchQueryService.saveQuery(query);
+    searchQueryService.saveQuery(query, DateTime.now());
 
     final viewModelFactory = locator<ViewModelFactory>();
     final viewModel = viewModelFactory.videoSearch(channelId, query);

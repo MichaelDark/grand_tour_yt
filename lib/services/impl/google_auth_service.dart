@@ -8,15 +8,10 @@ import '../auth_service.dart';
 
 @LazySingleton(as: AuthService)
 class GoogleAuthService implements AuthService {
-  static const _oauthScopes = [
-    'email',
-    'https://www.googleapis.com/auth/youtube.readonly',
-  ];
-
   final Logger _logger;
-  final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: _oauthScopes);
+  final GoogleSignIn _googleSignIn;
 
-  GoogleAuthService(this._logger);
+  GoogleAuthService(this._logger, this._googleSignIn);
 
   @override
   Future<String?> signInSilently() async {
