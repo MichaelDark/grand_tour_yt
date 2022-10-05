@@ -43,7 +43,13 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  # Tests
+  mocktail: ^0.3.0
+
+  # Lints
   flutter_lints: ^2.0.0
+  
+  # Code Gen
   build_runner: ^2.2.1
   injectable_generator: ^1.5.4
   flutter_gen_runner: ^5.0.1

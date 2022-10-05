@@ -58,6 +58,7 @@ class GoogleApiYoutubeService implements YoutubeService {
       final response = await api.videos.list(
         YoutubeConstants.parts.video,
         id: [id],
+        maxResults: 1,
       );
       return _mapper.mapVideo(response);
     } catch (e, s) {
