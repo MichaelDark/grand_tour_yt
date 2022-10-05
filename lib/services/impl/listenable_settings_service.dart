@@ -34,12 +34,13 @@ class ListenableSettingsService extends ChangeNotifier
 
   @override
   void setLocale(Locale newLocale) {
-    if (YoutubeStrings.supportedLocales.contains(newLocale)) {
+    if (!YoutubeStrings.supportedLocales.contains(newLocale)) {
       _logger.e(
         'Trying to set locale that is not in the list of supported locales: '
         '${newLocale.toLanguageTag()} not in '
         '${YoutubeStrings.supportedLocales.map((l) => l.toLanguageTag()).toList()}',
       );
+      return;
     }
     locale = newLocale;
     notifyListeners();
