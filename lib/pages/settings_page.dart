@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
+import 'package:locale_emoji_flutter/locale_emoji_flutter.dart';
 import 'package:recase/recase.dart';
 
 import '../di/locator.dart';
 import '../l10n/youtube_strings.dart';
 import '../services/search_query_repository.dart';
 import '../services/settings_service.dart';
-import '../utils/emoji_flag.dart';
 import '../widgets/clear_history_confirmation_dialog.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -71,7 +71,7 @@ class SettingsPage extends StatelessWidget {
                   return <PopupMenuEntry<Locale>>[
                     ...YoutubeStrings.supportedLocales.map(
                       (locale) {
-                        final emojiFlag = locale.emojiFlag;
+                        final emojiFlag = locale.flagEmoji;
                         final prefix = emojiFlag == null ? '' : '$emojiFlag  ';
                         final displayName = locale.getDisplayName(context);
 

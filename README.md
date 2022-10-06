@@ -73,7 +73,7 @@ The following packages are used for various UI purposes:
 - `shimmer` - for displaying loading elements
 - `flutter_localized_locales` - for language names
 - `recase` - for changing the casing of texts
-- `characters` - for displaying the moji of the language (TBD: move to separate package)
+- `locale_emoji_flutter` - for displaying the emoji of the language
 
 These packages are really useful, but are available only during development:
 - `mocktail` - for testing (creating mocks)
